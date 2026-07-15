@@ -462,6 +462,11 @@ export type SkillQuestionOptionRow = {
   sort_order: number;
 }
 
+export type SkillQuestionAnswerRow = {
+  question_id: string;
+  correct_option_id: string;
+}
+
 export type SkillResponseRow = {
   id: string;
   question_id: string;
@@ -782,6 +787,7 @@ export type Database = {
       free_entry_requests: TableDef<FreeEntryRequestRow>;
       skill_questions: TableDef<SkillQuestionRow>;
       skill_question_options: TableDef<SkillQuestionOptionRow>;
+      skill_question_answers: TableDef<SkillQuestionAnswerRow>;
       skill_responses: TableDef<SkillResponseRow>;
       payment_customers: TableDef<PaymentCustomerRow>;
       payment_transactions: TableDef<PaymentTransactionRow>;

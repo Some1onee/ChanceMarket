@@ -1,62 +1,76 @@
 import Link from "next/link";
 import { Wordmark } from "@/components/layout/wordmark";
 import { brand } from "@/lib/config/brand";
+import { getDictionary, type Dictionary } from "@/lib/localization/dictionaries";
+import { getLocale } from "@/lib/localization/locale";
 
-const columns: { title: string; links: { label: string; href: string }[] }[] = [
+type FooterLinkKey = keyof Dictionary["footer"]["links"];
+
+const columns: {
+  titleKey: keyof Dictionary["footer"]["columns"];
+  links: { labelKey: FooterLinkKey; href: string }[];
+}[] = [
   {
-    title: "Marketplace",
+    titleKey: "marketplace",
     links: [
-      { label: "Browse competitions", href: "/campaigns" },
-      { label: "Winners", href: "/winners" },
-      { label: "How it works", href: "/how-it-works" },
-      { label: "Free entry route", href: "/free-entry-route" },
-      { label: "Sell with us", href: "/sell" },
+      { labelKey: "browse", href: "/campaigns" },
+      { labelKey: "winners", href: "/winners" },
+      { labelKey: "howItWorks", href: "/how-it-works" },
+      { labelKey: "freeEntryRoute", href: "/free-entry-route" },
+      { labelKey: "sell", href: "/sell" },
     ],
   },
   {
-    title: "Trust",
+    titleKey: "trust",
     links: [
-      { label: "Trust & safety", href: "/trust-safety" },
-      { label: "Responsible participation", href: "/responsible-participation" },
-      { label: "Seller standards", href: "/seller-standards" },
-      { label: "Prohibited items", href: "/prohibited-items" },
-      { label: "Draw verification", href: "/draws" },
+      { labelKey: "trustSafety", href: "/trust-safety" },
+      { labelKey: "responsibleParticipation", href: "/responsible-participation" },
+      { labelKey: "sellerStandards", href: "/seller-standards" },
+      { labelKey: "prohibitedItems", href: "/prohibited-items" },
+      { labelKey: "drawVerification", href: "/draws" },
     ],
   },
   {
-    title: "Support",
+    titleKey: "support",
     links: [
-      { label: "Help centre", href: "/help" },
-      { label: "Contact", href: "/contact" },
-      { label: "Complaints", href: "/complaints" },
-      { label: "Dispute resolution", href: "/dispute-resolution" },
-      { label: "Accessibility", href: "/accessibility" },
+      { labelKey: "helpCentre", href: "/help" },
+      { labelKey: "contact", href: "/contact" },
+      { labelKey: "complaints", href: "/complaints" },
+      { labelKey: "disputeResolution", href: "/dispute-resolution" },
+      { labelKey: "accessibility", href: "/accessibility" },
     ],
   },
   {
-    title: "Legal",
+    titleKey: "legal",
     links: [
-      { label: "Terms of service", href: "/terms" },
-      { label: "Privacy policy", href: "/privacy" },
-      { label: "Cookies", href: "/cookies" },
-      { label: "Official rules", href: "/official-rules" },
+      { labelKey: "terms", href: "/terms" },
+      { labelKey: "privacy", href: "/privacy" },
+      { labelKey: "cookies", href: "/cookies" },
+      { labelKey: "officialRules", href: "/official-rules" },
     ],
   },
 ];
 
-export function SiteFooter() {
+export async function SiteFooter() {
+  const locale = await getLocale();
+  const t = getDictionary(locale);
+
   return (
     <footer className="border-t border-border bg-subtle">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
         <div className="grid gap-10 md:grid-cols-[1.4fr_repeat(4,1fr)]">
           <div className="space-y-3">
             <Wordmark />
-            <p className="max-w-xs text-sm text-muted-foreground">{brand.description}</p>
+            <p className="max-w-xs text-sm text-muted-foreground">{t.footer.description}</p>
           </div>
           {columns.map((col) => (
-            <nav key={col.title} aria-label={col.title} className="space-y-3">
+            <nav
+              key={col.titleKey}
+              aria-label={t.footer.columns[col.titleKey]}
+              className="space-y-3"
+            >
               <h2 className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
-                {col.title}
+                {t.footer.columns[col.titleKey]}
               </h2>
               <ul className="space-y-2">
                 {col.links.map((link) => (
@@ -65,7 +79,7 @@ export function SiteFooter() {
                       href={link.href}
                       className="text-sm text-muted-foreground transition-colors hover:text-foreground"
                     >
-                      {link.label}
+                      {t.footer.links[link.labelKey]}
                     </Link>
                   </li>
                 ))}
@@ -75,16 +89,15 @@ export function SiteFooter() {
         </div>
         <div className="mt-10 flex flex-col gap-3 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {new Date().getFullYear()} {brand.name}. All legal documents on this site are
-            templates pending review by qualified local counsel.
+            © {new Date().getFullYear()} {brand.name}. {t.footer.legalLine}
           </p>
           <p>
-            18+ or the minimum age in your territory. Please participate responsibly —{" "}
+            {t.footer.ageLine}{" "}
             <Link
               href="/responsible-participation"
               className="underline underline-offset-2 hover:text-foreground"
             >
-              set your limits
+              {t.footer.setLimits}
             </Link>
             .
           </p>

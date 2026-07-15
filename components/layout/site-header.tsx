@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Menu, Search } from "lucide-react";
 import { Wordmark } from "@/components/layout/wordmark";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
+import { LocaleSwitcher } from "@/components/layout/locale-switcher";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { getDictionary } from "@/lib/localization/dictionaries";
@@ -81,6 +82,7 @@ export async function SiteHeader() {
               <Search aria-hidden />
             </Link>
           </Button>
+          <LocaleSwitcher locale={locale} label={t.localeSwitcher.label} />
           <ThemeToggle />
           {user ? <NotificationsBell userId={user.id} initialUnread={unreadCount} /> : null}
           {user ? (
@@ -90,6 +92,7 @@ export async function SiteHeader() {
               avatarUrl={user.avatarUrl}
               isAdmin={user.roles.includes("admin") || user.roles.includes("super_admin")}
               isSeller={user.roles.includes("seller")}
+              t={t.auth.userMenu}
             />
           ) : (
             <>

@@ -26,7 +26,7 @@ export const brand = {
     instagram: "https://instagram.com/example",
   },
   defaultLocale: "en-GB" as const,
-  locales: ["en-GB", "en-US"] as const,
+  locales: ["en-GB", "en-US", "fr-FR", "de-DE"] as const,
   defaultCurrency: "GBP" as const,
   currencies: ["GBP", "USD"] as const,
 } as const;

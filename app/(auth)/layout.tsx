@@ -1,7 +1,11 @@
 import Link from "next/link";
 import { Wordmark } from "@/components/layout/wordmark";
+import { getDictionary } from "@/lib/localization/dictionaries";
+import { getLocale } from "@/lib/localization/locale";
 
-export default function AuthLayout({ children }: { children: React.ReactNode }) {
+export default async function AuthLayout({ children }: { children: React.ReactNode }) {
+  const locale = await getLocale();
+  const t = getDictionary(locale).auth.disclaimer;
   return (
     <div className="prize-spotlight flex min-h-dvh flex-col items-center justify-center px-4 py-10">
       <div className="mb-8">
@@ -11,13 +15,13 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         {children}
       </div>
       <p className="mt-6 max-w-md text-center text-xs text-muted-foreground">
-        18+ or the minimum age in your territory. By continuing you agree to our{" "}
+        {t.agePrefix}{" "}
         <Link href="/terms" className="underline underline-offset-2">
-          terms
+          {t.terms}
         </Link>{" "}
-        and{" "}
+        {t.and}{" "}
         <Link href="/privacy" className="underline underline-offset-2">
-          privacy policy
+          {t.privacy}
         </Link>
         .
       </p>

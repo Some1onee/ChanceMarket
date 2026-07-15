@@ -1,7 +1,8 @@
 import { cookies, headers } from "next/headers";
 import { brand, type Locale } from "@/lib/config/brand";
+import { LOCALE_COOKIE } from "@/lib/localization/constants";
 
-export const LOCALE_COOKIE = "cm-locale";
+export { LOCALE_COOKIE };
 
 export function isLocale(value: string): value is Locale {
   return (brand.locales as readonly string[]).includes(value);
@@ -15,6 +16,12 @@ export async function getLocale(): Promise<Locale> {
 
   const headerStore = await headers();
   const accept = headerStore.get("accept-language") ?? "";
-  if (/en[-_]US/i.test(accept)) return "en-US";
+  for (const part of accept.split(",")) {
+    const tag = part.split(";")[0]!.trim();
+    if (/^en[-_]US/i.test(tag)) return "en-US";
+    if (/^fr/i.test(tag)) return "fr-FR";
+    if (/^de/i.test(tag)) return "de-DE";
+    if (/^en/i.test(tag)) return "en-GB";
+  }
   return brand.defaultLocale;
 }

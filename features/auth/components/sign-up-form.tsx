@@ -20,8 +20,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import type { Dictionary } from "@/lib/localization/dictionaries";
 
-export function SignUpForm() {
+export function SignUpForm({ t }: { t: Dictionary["auth"]["signUp"] }) {
   const [submittedEmail, setSubmittedEmail] = React.useState<string | null>(null);
   const form = useForm<SignUpInput>({
     resolver: zodResolver(signUpSchema),
@@ -49,13 +50,13 @@ export function SignUpForm() {
         <div className="flex size-12 items-center justify-center rounded-full bg-accent-soft text-accent">
           <MailCheck aria-hidden />
         </div>
-        <h1 className="text-xl font-semibold">Check your inbox</h1>
+        <h1 className="text-xl font-semibold">{t.inboxTitle}</h1>
         <p className="text-sm text-muted-foreground">
-          We sent a confirmation link to <strong>{submittedEmail}</strong>. Open it to activate your
-          account.
+          {t.inboxBodyPrefix} <strong>{submittedEmail}</strong>
+          {t.inboxBodySuffix}
         </p>
         <Button variant="outline" asChild>
-          <Link href="/sign-in">Back to sign in</Link>
+          <Link href="/sign-in">{t.backToSignIn}</Link>
         </Button>
       </div>
     );
@@ -64,11 +65,11 @@ export function SignUpForm() {
   return (
     <div className="space-y-6">
       <div className="space-y-1.5">
-        <h1 className="text-2xl font-semibold tracking-tight">Create your account</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">{t.title}</h1>
         <p className="text-sm text-muted-foreground">
-          Already a member?{" "}
+          {t.alreadyMember}{" "}
           <Link href="/sign-in" className="text-primary underline-offset-4 hover:underline">
-            Sign in
+            {t.signIn}
           </Link>
         </p>
       </div>
@@ -80,11 +81,11 @@ export function SignUpForm() {
             name="displayName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Display name</FormLabel>
+                <FormLabel>{t.displayName}</FormLabel>
                 <FormControl>
                   <Input
                     autoComplete="nickname"
-                    placeholder="How you'll appear publicly"
+                    placeholder={t.displayNamePlaceholder}
                     {...field}
                   />
                 </FormControl>
@@ -97,7 +98,7 @@ export function SignUpForm() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>{t.email}</FormLabel>
                 <FormControl>
                   <Input
                     type="email"
@@ -115,11 +116,11 @@ export function SignUpForm() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel>{t.password}</FormLabel>
                 <FormControl>
                   <Input type="password" autoComplete="new-password" {...field} />
                 </FormControl>
-                <FormDescription>At least 10 characters with letters and a number.</FormDescription>
+                <FormDescription>{t.passwordHint}</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -134,9 +135,9 @@ export function SignUpForm() {
                     <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
                   <FormLabel className="leading-snug font-normal">
-                    I confirm I meet the minimum age requirement and accept the{" "}
+                    {t.acceptTermsPrefix}{" "}
                     <Link href="/terms" className="underline underline-offset-2" target="_blank">
-                      terms of service
+                      {t.termsOfService}
                     </Link>
                   </FormLabel>
                 </div>
@@ -154,14 +155,14 @@ export function SignUpForm() {
                     <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
                   <FormLabel className="leading-snug font-normal text-muted-foreground">
-                    Email me about new competitions (optional)
+                    {t.marketingOptIn}
                   </FormLabel>
                 </div>
               </FormItem>
             )}
           />
           <Button type="submit" className="w-full" loading={form.formState.isSubmitting}>
-            Create account
+            {t.submit}
           </Button>
         </form>
       </Form>

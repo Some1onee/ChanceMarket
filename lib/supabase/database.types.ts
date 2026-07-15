@@ -866,8 +866,39 @@ export type Database = {
         Returns: DrawRow;
       };
       select_draw_winner: {
-        Args: { p_draw_id: string; p_random_value: number; p_seed_hash: string };
+        Args: { p_draw_id: string };
         Returns: DrawRow;
+      };
+      confirm_draw_winner: {
+        Args: { p_draw_id: string };
+        Returns: DrawRow;
+      };
+      reroll_draw: {
+        Args: {
+          p_draw_id: string;
+          p_reason: string;
+          p_first_approver: string;
+          p_second_approver: string;
+        };
+        Returns: DrawRow;
+      };
+      release_expired_reservations: {
+        Args: Record<string, never>;
+        Returns: number;
+      };
+      enqueue_notification: {
+        Args: {
+          p_user_id: string;
+          p_kind: string;
+          p_title: string;
+          p_body: string | null;
+          p_href: string | null;
+        };
+        Returns: string;
+      };
+      refresh_seller_balance: {
+        Args: { p_seller_id: string; p_currency: string };
+        Returns: undefined;
       };
       record_ledger_entry: {
         Args: {

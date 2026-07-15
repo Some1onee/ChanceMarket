@@ -1,0 +1,203 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ────────────────────────────────────────────────────────────────────────────
+   ChanceMarket design tokens
+   Light: ivory paper, graphite ink, deep indigo primary, teal-mint accent.
+   Dark: graphite night, soft indigo, luminous mint.
+   All pairings meet WCAG AA at their intended usage.
+──────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  --background: #fafaf7;
+  --foreground: #1f2328;
+  --card: #ffffff;
+  --card-foreground: #1f2328;
+  --popover: #ffffff;
+  --popover-foreground: #1f2328;
+  --primary: #4338ca;
+  --primary-foreground: #ffffff;
+  --primary-soft: #eef0fd;
+  --accent: #0f766e;
+  --accent-foreground: #ffffff;
+  --accent-soft: #ecfbf8;
+  --muted: #f1f1ec;
+  --muted-foreground: #5b6069;
+  --subtle: #f6f6f2;
+  --border: #e4e4dd;
+  --input: #d9d9d1;
+  --ring: #4338ca;
+  --destructive: #b3261e;
+  --destructive-foreground: #ffffff;
+  --success: #166534;
+  --success-foreground: #ffffff;
+  --warning: #92400e;
+  --warning-foreground: #ffffff;
+  --info: #1e40af;
+  --info-foreground: #ffffff;
+
+  --radius: 0.75rem;
+
+  --shadow-xs: 0 1px 2px 0 rgb(31 35 40 / 0.04);
+  --shadow-sm: 0 1px 3px 0 rgb(31 35 40 / 0.06), 0 1px 2px -1px rgb(31 35 40 / 0.05);
+  --shadow-md: 0 4px 10px -2px rgb(31 35 40 / 0.07), 0 2px 4px -2px rgb(31 35 40 / 0.05);
+  --shadow-lg: 0 12px 28px -6px rgb(31 35 40 / 0.1), 0 4px 10px -4px rgb(31 35 40 / 0.06);
+}
+
+.dark {
+  --background: #0e1015;
+  --foreground: #e8eaf0;
+  --card: #151823;
+  --card-foreground: #e8eaf0;
+  --popover: #1a1e2b;
+  --popover-foreground: #e8eaf0;
+  --primary: #a5b0fc;
+  --primary-foreground: #17173d;
+  --primary-soft: #22254a;
+  --accent: #5eead4;
+  --accent-foreground: #042f2a;
+  --accent-soft: #10302d;
+  --muted: #1d212e;
+  --muted-foreground: #9aa1b0;
+  --subtle: #131622;
+  --border: #262b3a;
+  --input: #323848;
+  --ring: #a5b0fc;
+  --destructive: #f8867f;
+  --destructive-foreground: #3d0a07;
+  --success: #7fd8a2;
+  --success-foreground: #05240f;
+  --warning: #f5c26b;
+  --warning-foreground: #351b03;
+  --info: #93b4f8;
+  --info-foreground: #0a1c40;
+
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.45), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 4px 10px -2px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+  --shadow-lg: 0 12px 28px -6px rgb(0 0 0 / 0.55), 0 4px 10px -4px rgb(0 0 0 / 0.4);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-soft: var(--primary-soft);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-soft: var(--accent-soft);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-subtle: var(--subtle);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "SFMono-Regular", monospace;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 6px);
+  --radius-2xl: calc(var(--radius) + 12px);
+
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-feature-settings:
+      "liga" 1,
+      "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  ::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Signature: mono verification strip used for draw ids & snapshot hashes. */
+  .verification-strip {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: var(--muted-foreground);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.375rem 0.625rem;
+    background:
+      linear-gradient(var(--subtle), var(--subtle)) padding-box,
+      transparent;
+    overflow-wrap: anywhere;
+  }
+  /* Quiet radial spotlight used behind hero prize imagery. */
+  .prize-spotlight {
+    background:
+      radial-gradient(60% 55% at 50% 40%, color-mix(in oklab, var(--primary) 9%, transparent), transparent 70%),
+      radial-gradient(45% 40% at 68% 60%, color-mix(in oklab, var(--accent) 7%, transparent), transparent 70%);
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}

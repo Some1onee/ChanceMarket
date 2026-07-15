@@ -8,15 +8,30 @@ export const metadata: Metadata = { title: "Admin overview", robots: { index: fa
 export default async function AdminOverviewPage() {
   const supabase = await getSupabaseServerClient();
 
-  const [pendingModeration, pendingSellers, openReports, openDisputes, activeCampaigns, pendingDraws] =
-    await Promise.all([
-      supabase.from("moderation_cases").select("id", { count: "exact", head: true }).eq("status", "pending"),
-      supabase.from("seller_profiles").select("id", { count: "exact", head: true }).eq("status", "pending"),
-      supabase.from("reports").select("id", { count: "exact", head: true }).eq("status", "open"),
-      supabase.from("disputes").select("id", { count: "exact", head: true }).eq("status", "open"),
-      supabase.from("campaigns").select("id", { count: "exact", head: true }).in("status", ["active", "sold_out", "closing"]),
-      supabase.from("draws").select("id", { count: "exact", head: true }).eq("status", "selected"),
-    ]);
+  const [
+    pendingModeration,
+    pendingSellers,
+    openReports,
+    openDisputes,
+    activeCampaigns,
+    pendingDraws,
+  ] = await Promise.all([
+    supabase
+      .from("moderation_cases")
+      .select("id", { count: "exact", head: true })
+      .eq("status", "pending"),
+    supabase
+      .from("seller_profiles")
+      .select("id", { count: "exact", head: true })
+      .eq("status", "pending"),
+    supabase.from("reports").select("id", { count: "exact", head: true }).eq("status", "open"),
+    supabase.from("disputes").select("id", { count: "exact", head: true }).eq("status", "open"),
+    supabase
+      .from("campaigns")
+      .select("id", { count: "exact", head: true })
+      .in("status", ["active", "sold_out", "closing"]),
+    supabase.from("draws").select("id", { count: "exact", head: true }).eq("status", "selected"),
+  ]);
 
   const tiles = [
     { label: "Pending moderation", value: pendingModeration.count ?? 0, href: "/admin/moderation" },
@@ -43,8 +58,8 @@ export default async function AdminOverviewPage() {
         ))}
       </div>
       <p className="text-xs text-muted-foreground">
-        All admin operations require a written justification and are recorded in the immutable
-        audit log. Some operations (re-draws) require dual approval.
+        All admin operations require a written justification and are recorded in the immutable audit
+        log. Some operations (re-draws) require dual approval.
       </p>
     </div>
   );

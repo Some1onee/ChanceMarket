@@ -49,27 +49,39 @@ type EntryFlowProps = {
   hasDateOfBirth: boolean;
 };
 
-export function EntryFlow({ campaign, skillQuestion, initialRoute, hasDateOfBirth }: EntryFlowProps) {
+export function EntryFlow({
+  campaign,
+  skillQuestion,
+  initialRoute,
+  hasDateOfBirth,
+}: EntryFlowProps) {
   const currency = isCurrency(campaign.currency) ? campaign.currency : "GBP";
   const isFreeType = campaign.entryPriceMinor === 0;
   const personalRemaining = Math.max(campaign.maxPerUser - campaign.userConfirmed, 0);
   const maxQuantity = Math.min(campaign.maxPerOrder, personalRemaining, campaign.remainingTotal);
 
-  const [quantity, setQuantity] = React.useState(Math.min(campaign.minPerOrder, Math.max(maxQuantity, 1)));
+  const [quantity, setQuantity] = React.useState(
+    Math.min(campaign.minPerOrder, Math.max(maxQuantity, 1)),
+  );
   const [skillOption, setSkillOption] = React.useState<string>("");
   const [skillResponseId, setSkillResponseId] = React.useState<string | null>(null);
-  const [skillState, setSkillState] = React.useState<"unanswered" | "correct" | "incorrect">("unanswered");
+  const [skillState, setSkillState] = React.useState<"unanswered" | "correct" | "incorrect">(
+    "unanswered",
+  );
   const [checkingSkill, setCheckingSkill] = React.useState(false);
   const [ageConfirm, setAgeConfirm] = React.useState(false);
   const [rulesConfirm, setRulesConfirm] = React.useState(false);
   const [submitting, setSubmitting] = React.useState(false);
-  const [outcome, setOutcome] = React.useState<EntryOutcome | { status: "free_route_accepted" } | null>(null);
+  const [outcome, setOutcome] = React.useState<
+    EntryOutcome | { status: "free_route_accepted" } | null
+  >(null);
   const idempotencyKey = React.useRef<string>(crypto.randomUUID());
 
   const total: Money = money(campaign.entryPriceMinor * quantity, currency);
   const needsSkill = campaign.skillRequired && skillQuestion !== null;
   const skillSatisfied = !needsSkill || skillState === "correct";
-  const canSubmit = skillSatisfied && ageConfirm && rulesConfirm && maxQuantity > 0 && hasDateOfBirth;
+  const canSubmit =
+    skillSatisfied && ageConfirm && rulesConfirm && maxQuantity > 0 && hasDateOfBirth;
 
   async function checkSkillAnswer() {
     if (!skillQuestion || !skillOption) return;
@@ -166,7 +178,10 @@ export function EntryFlow({ campaign, skillQuestion, initialRoute, hasDateOfBirt
   }
 
   const skillBlock = needsSkill ? (
-    <section aria-labelledby="skill-heading" className="space-y-3 rounded-lg border border-border p-4">
+    <section
+      aria-labelledby="skill-heading"
+      className="space-y-3 rounded-lg border border-border p-4"
+    >
       <h3 id="skill-heading" className="flex items-center gap-2 text-sm font-semibold">
         <ShieldCheck className="size-4 text-primary" aria-hidden /> Qualifying question
       </h3>
@@ -174,7 +189,11 @@ export function EntryFlow({ campaign, skillQuestion, initialRoute, hasDateOfBirt
       <RadioGroup value={skillOption} onValueChange={setSkillOption} aria-label="Answer options">
         {skillQuestion?.options.map((option) => (
           <div key={option.id} className="flex items-center gap-2.5">
-            <RadioGroupItem id={`skill-${option.id}`} value={option.id} disabled={skillState === "correct"} />
+            <RadioGroupItem
+              id={`skill-${option.id}`}
+              value={option.id}
+              disabled={skillState === "correct"}
+            />
             <Label htmlFor={`skill-${option.id}`} className="font-normal">
               {option.label}
             </Label>
@@ -191,7 +210,13 @@ export function EntryFlow({ campaign, skillQuestion, initialRoute, hasDateOfBirt
         </p>
       ) : null}
       {skillState !== "correct" ? (
-        <Button size="sm" variant="secondary" onClick={() => void checkSkillAnswer()} loading={checkingSkill} disabled={!skillOption}>
+        <Button
+          size="sm"
+          variant="secondary"
+          onClick={() => void checkSkillAnswer()}
+          loading={checkingSkill}
+          disabled={!skillOption}
+        >
           Check answer
         </Button>
       ) : null}
@@ -216,17 +241,29 @@ export function EntryFlow({ campaign, skillQuestion, initialRoute, hasDateOfBirt
         </Alert>
       ) : null}
       <div className="flex items-start gap-2.5">
-        <Checkbox id="confirm-age" checked={ageConfirm} onCheckedChange={(checked) => setAgeConfirm(checked === true)} />
+        <Checkbox
+          id="confirm-age"
+          checked={ageConfirm}
+          onCheckedChange={(checked) => setAgeConfirm(checked === true)}
+        />
         <Label htmlFor="confirm-age" className="leading-snug font-normal">
           I confirm I am {campaign.minAge} or older and meet the residency requirements in the
           official rules.
         </Label>
       </div>
       <div className="flex items-start gap-2.5">
-        <Checkbox id="confirm-rules" checked={rulesConfirm} onCheckedChange={(checked) => setRulesConfirm(checked === true)} />
+        <Checkbox
+          id="confirm-rules"
+          checked={rulesConfirm}
+          onCheckedChange={(checked) => setRulesConfirm(checked === true)}
+        />
         <Label htmlFor="confirm-rules" className="leading-snug font-normal">
           I have read the{" "}
-          <Link href={`/campaigns/${campaign.slug}#rules-heading`} className="underline underline-offset-2" target="_blank">
+          <Link
+            href={`/campaigns/${campaign.slug}#rules-heading`}
+            className="underline underline-offset-2"
+            target="_blank"
+          >
             official rules
           </Link>{" "}
           and the refund policy.
@@ -249,7 +286,13 @@ export function EntryFlow({ campaign, skillQuestion, initialRoute, hasDateOfBirt
           </p>
         </div>
         {confirmations}
-        <Button size="lg" className="w-full" disabled={!canSubmit} loading={submitting} onClick={() => void submitEntry("promotional")}>
+        <Button
+          size="lg"
+          className="w-full"
+          disabled={!canSubmit}
+          loading={submitting}
+          onClick={() => void submitEntry("promotional")}
+        >
           Confirm my free entry
         </Button>
       </div>
@@ -287,7 +330,10 @@ export function EntryFlow({ campaign, skillQuestion, initialRoute, hasDateOfBirt
             >
               <Minus aria-hidden />
             </Button>
-            <span className="min-w-16 text-center font-mono text-2xl font-bold tabular-nums" aria-live="polite">
+            <span
+              className="min-w-16 text-center font-mono text-2xl font-bold tabular-nums"
+              aria-live="polite"
+            >
               {quantity}
             </span>
             <Button
@@ -314,13 +360,23 @@ export function EntryFlow({ campaign, skillQuestion, initialRoute, hasDateOfBirt
         <Separator />
         {confirmations}
 
-        <div className={cn("rounded-lg border border-border bg-subtle p-3 text-xs text-muted-foreground")}>
+        <div
+          className={cn(
+            "rounded-lg border border-border bg-subtle p-3 text-xs text-muted-foreground",
+          )}
+        >
           Payments are processed by our payment partner in test (mock) mode — no real card is
-          charged in this environment. Refunds are automatic if the campaign is cancelled before
-          the draw.
+          charged in this environment. Refunds are automatic if the campaign is cancelled before the
+          draw.
         </div>
 
-        <Button size="lg" className="w-full" disabled={!canSubmit || quantity < 1} loading={submitting} onClick={() => void submitEntry("paid")}>
+        <Button
+          size="lg"
+          className="w-full"
+          disabled={!canSubmit || quantity < 1}
+          loading={submitting}
+          onClick={() => void submitEntry("paid")}
+        >
           Pay {formatMoney(total)} and enter
         </Button>
       </TabsContent>
@@ -337,12 +393,19 @@ export function EntryFlow({ campaign, skillQuestion, initialRoute, hasDateOfBirt
                 "This campaign accepts free entries with identical chances to paid entries."}
             </p>
             <p className="text-xs text-muted-foreground">
-              Free entries carry exactly the same chances as paid entries. One online free entry
-              per person per campaign; postal requests are processed on receipt.
+              Free entries carry exactly the same chances as paid entries. One online free entry per
+              person per campaign; postal requests are processed on receipt.
             </p>
           </section>
           {confirmations}
-          <Button size="lg" variant="accent" className="w-full" disabled={!canSubmit} loading={submitting} onClick={() => void submitFreeRoute()}>
+          <Button
+            size="lg"
+            variant="accent"
+            className="w-full"
+            disabled={!canSubmit}
+            loading={submitting}
+            onClick={() => void submitFreeRoute()}
+          >
             Request my free entry
           </Button>
         </TabsContent>

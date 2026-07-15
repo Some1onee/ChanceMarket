@@ -74,7 +74,9 @@ export async function getSellerWizardOptions(): Promise<SellerWizardOptions> {
   }
 
   const allowedCategoryIds = new Set(
-    (jcRows ?? []).filter((row) => activeIds.has(row.jurisdiction_id)).map((row) => row.category_id),
+    (jcRows ?? [])
+      .filter((row) => activeIds.has(row.jurisdiction_id))
+      .map((row) => row.category_id),
   );
 
   return {

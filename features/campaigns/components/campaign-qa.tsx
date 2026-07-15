@@ -48,7 +48,10 @@ export function CampaignQA({
           {questions.map((item) => (
             <li key={item.id} className="rounded-lg border border-border bg-card p-4">
               <p className="flex items-start gap-2 text-sm font-medium">
-                <MessageCircleQuestion className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
+                <MessageCircleQuestion
+                  className="mt-0.5 size-4 shrink-0 text-primary"
+                  aria-hidden
+                />
                 {item.question}
               </p>
               {item.answer ? (
@@ -70,7 +73,12 @@ export function CampaignQA({
             value={question}
             onChange={(event) => setQuestion(event.target.value)}
           />
-          <Button size="sm" onClick={() => void submit()} loading={sending} disabled={question.trim().length < 5}>
+          <Button
+            size="sm"
+            onClick={() => void submit()}
+            loading={sending}
+            disabled={question.trim().length < 5}
+          >
             Send question
           </Button>
         </div>

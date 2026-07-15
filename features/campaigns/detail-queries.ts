@@ -106,7 +106,9 @@ export async function getSimilarCampaigns(
   const supabase = await getSupabaseServerClient();
   const { data } = await supabase
     .from("campaigns")
-    .select("*, categories(slug, name), campaign_images(storage_path, alt_text, sort_order, is_cover)")
+    .select(
+      "*, categories(slug, name), campaign_images(storage_path, alt_text, sort_order, is_cover)",
+    )
     .eq("category_id", categoryId)
     .eq("status", "active")
     .neq("id", campaignId)

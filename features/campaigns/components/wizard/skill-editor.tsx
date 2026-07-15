@@ -67,13 +67,19 @@ export function SkillEditor({
       >
         {options.map((option, index) => (
           <div key={index} className="flex items-center gap-2.5">
-            <RadioGroupItem id={`opt-correct-${index}`} value={String(index)} aria-label={`Option ${index + 1} is correct`} />
+            <RadioGroupItem
+              id={`opt-correct-${index}`}
+              value={String(index)}
+              aria-label={`Option ${index + 1} is correct`}
+            />
             <Input
               aria-label={`Option ${index + 1}`}
               value={option}
               onChange={(event) =>
                 setOptions((current) =>
-                  current.map((item, itemIndex) => (itemIndex === index ? event.target.value : item)),
+                  current.map((item, itemIndex) =>
+                    itemIndex === index ? event.target.value : item,
+                  ),
                 )
               }
               placeholder={`Option ${index + 1}`}
@@ -92,7 +98,9 @@ export function SkillEditor({
           </div>
         ))}
       </RadioGroup>
-      <p className="text-xs text-muted-foreground">Select the radio button next to the correct option.</p>
+      <p className="text-xs text-muted-foreground">
+        Select the radio button next to the correct option.
+      </p>
 
       <div className="flex gap-2">
         <Button

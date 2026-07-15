@@ -56,7 +56,9 @@ export function CampaignListItem({
         </p>
         <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
           <span className="font-semibold text-primary">
-            {isFree ? "Free" : formatMoneyCompact(money(campaign.entry_price_minor, currency), locale)}
+            {isFree
+              ? "Free"
+              : formatMoneyCompact(money(campaign.entry_price_minor, currency), locale)}
           </span>
           <span className="text-muted-foreground">
             {dictionary.campaign.prizeValue}{" "}

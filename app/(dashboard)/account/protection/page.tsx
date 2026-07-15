@@ -35,7 +35,9 @@ export default async function ProtectionPage() {
       <Card>
         <CardHeader>
           <CardTitle>Your last 30 days</CardTitle>
-          <CardDescription>Paid entries only. Free-route entries never cost anything.</CardDescription>
+          <CardDescription>
+            Paid entries only. Free-route entries never cost anything.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <p className="text-2xl font-semibold">{formatMoney(money(spent30d, currency), locale)}</p>
@@ -47,7 +49,9 @@ export default async function ProtectionPage() {
         currentLimitMajor={
           settings?.spend_limit_minor != null ? Math.floor(settings.spend_limit_minor / 100) : null
         }
-        currentPeriod={(settings?.spend_limit_period as "daily" | "weekly" | "monthly") ?? "monthly"}
+        currentPeriod={
+          (settings?.spend_limit_period as "daily" | "weekly" | "monthly") ?? "monthly"
+        }
         pausedUntil={settings?.paused_until ?? null}
       />
     </div>

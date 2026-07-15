@@ -71,9 +71,9 @@ export function DataPrivacyActions() {
         <CardHeader>
           <CardTitle>Close account</CardTitle>
           <CardDescription>
-            Closing your account signs you out everywhere and disables all participation. Records
-            we must keep for financial and legal reasons (orders, payments, draw results) are
-            retained for the statutory period, then erased.
+            Closing your account signs you out everywhere and disables all participation. Records we
+            must keep for financial and legal reasons (orders, payments, draw results) are retained
+            for the statutory period, then erased.
           </CardDescription>
         </CardHeader>
         <CardContent>

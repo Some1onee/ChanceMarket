@@ -161,7 +161,11 @@ export function SellerOnboardingForm() {
                 </FormControl>
                 <FormLabel className="leading-snug font-normal">
                   I accept the{" "}
-                  <a href="/seller-standards" target="_blank" className="underline underline-offset-2">
+                  <a
+                    href="/seller-standards"
+                    target="_blank"
+                    className="underline underline-offset-2"
+                  >
                     seller standards
                   </a>{" "}
                   and confirm I own (or am authorised to offer) every prize I list, with documentary

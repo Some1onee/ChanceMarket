@@ -35,7 +35,9 @@ async function requireOwnedDraft(campaignId: string) {
     .maybeSingle();
 
   const row = campaign as unknown as
-    | (NonNullable<typeof campaign> & { seller_profiles: { id: string; user_id: string; status: string } })
+    | (NonNullable<typeof campaign> & {
+        seller_profiles: { id: string; user_id: string; status: string };
+      })
     | null;
 
   if (!row || row.seller_profiles.user_id !== user.id) {
@@ -58,7 +60,10 @@ export async function createDraftCampaignAction(): Promise<ActionResult<{ id: st
       .eq("user_id", user.id)
       .maybeSingle();
     if (!seller || seller.status !== "approved") {
-      throw new AppError("forbidden", "Your seller account must be approved before creating campaigns.");
+      throw new AppError(
+        "forbidden",
+        "Your seller account must be approved before creating campaigns.",
+      );
     }
 
     const { count } = await supabase
@@ -116,7 +121,10 @@ export async function saveDraftCampaignAction(
     if (data.categoryId !== undefined) update.category_id = data.categoryId;
     if (data.title !== undefined) {
       update.title = data.title;
-      if (campaign.title === "Untitled campaign" || !campaign.slug.startsWith(slugifyBase(data.title))) {
+      if (
+        campaign.title === "Untitled campaign" ||
+        !campaign.slug.startsWith(slugifyBase(data.title))
+      ) {
         update.slug = slugify(data.title);
       }
     }
@@ -125,8 +133,10 @@ export async function saveDraftCampaignAction(
     if (data.prizeValueMajor !== undefined) update.prize_value_minor = data.prizeValueMajor * 100;
     if (data.currency !== undefined) update.currency = data.currency;
     if (data.entryPriceMinor !== undefined) update.entry_price_minor = data.entryPriceMinor;
-    if (data.minEntriesPerOrder !== undefined) update.min_entries_per_order = data.minEntriesPerOrder;
-    if (data.maxEntriesPerOrder !== undefined) update.max_entries_per_order = data.maxEntriesPerOrder;
+    if (data.minEntriesPerOrder !== undefined)
+      update.min_entries_per_order = data.minEntriesPerOrder;
+    if (data.maxEntriesPerOrder !== undefined)
+      update.max_entries_per_order = data.maxEntriesPerOrder;
     if (data.maxEntriesPerUser !== undefined) update.max_entries_per_user = data.maxEntriesPerUser;
     if (data.maxEntriesTotal !== undefined) update.max_entries_total = data.maxEntriesTotal;
     if (data.freeRouteEnabled !== undefined) update.free_route_enabled = data.freeRouteEnabled;

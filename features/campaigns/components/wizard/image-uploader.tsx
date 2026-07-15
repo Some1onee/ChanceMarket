@@ -198,7 +198,13 @@ export function ImageUploader({
                   ) : null}
                 </div>
                 <div className="flex shrink-0 items-center gap-1">
-                  <Button variant="ghost" size="icon-sm" aria-label="Move up" onClick={() => move(index, -1)} disabled={index === 0}>
+                  <Button
+                    variant="ghost"
+                    size="icon-sm"
+                    aria-label="Move up"
+                    onClick={() => move(index, -1)}
+                    disabled={index === 0}
+                  >
                     <ArrowUp aria-hidden />
                   </Button>
                   <Button
@@ -219,7 +225,12 @@ export function ImageUploader({
                   >
                     <Star aria-hidden />
                   </Button>
-                  <Button variant="ghost" size="icon-sm" aria-label="Delete image" onClick={() => void remove(image)}>
+                  <Button
+                    variant="ghost"
+                    size="icon-sm"
+                    aria-label="Delete image"
+                    onClick={() => void remove(image)}
+                  >
                     <Trash2 className="text-destructive" aria-hidden />
                   </Button>
                 </div>

@@ -32,9 +32,9 @@ export async function runCampaignClosePipeline(campaignId: string): Promise<{
     .in("status", ["created", "requires_action", "processing"])
     .in(
       "order_id",
-      (
-        await admin.from("entry_orders").select("id").eq("campaign_id", campaignId)
-      ).data?.map((order) => order.id) ?? [],
+      (await admin.from("entry_orders").select("id").eq("campaign_id", campaignId)).data?.map(
+        (order) => order.id,
+      ) ?? [],
     );
   if ((inflight ?? 0) > 0) {
     throw new AppError(

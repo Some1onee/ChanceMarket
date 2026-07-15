@@ -1,6 +1,9 @@
 import { ProsePage, buildMetadata } from "@/components/marketing/prose-page";
 
-export const metadata = buildMetadata("Dispute Resolution", "Options when the complaints procedure isn't enough.");
+export const metadata = buildMetadata(
+  "Dispute Resolution",
+  "Options when the complaints procedure isn't enough.",
+);
 
 export default function DisputeResolutionPage() {
   return (

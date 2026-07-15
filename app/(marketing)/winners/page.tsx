@@ -19,7 +19,9 @@ export default async function WinnersPage() {
 
   const { data: draws } = await supabase
     .from("draws")
-    .select("id, public_id, status, selected_at, campaigns(title, slug, prize_value_minor, currency)")
+    .select(
+      "id, public_id, status, selected_at, campaigns(title, slug, prize_value_minor, currency)",
+    )
     .in("status", ["selected", "winner_verified"])
     .order("selected_at", { ascending: false })
     .limit(30);
@@ -50,7 +52,9 @@ export default async function WinnersPage() {
             <li key={draw.id} className="rounded-xl border border-border bg-card p-5 shadow-xs">
               <div className="mb-3 flex items-center justify-between">
                 <Badge variant={draw.status === "winner_verified" ? "success" : "info"}>
-                  {draw.status === "winner_verified" ? "Winner verified" : "Winner pending verification"}
+                  {draw.status === "winner_verified"
+                    ? "Winner verified"
+                    : "Winner pending verification"}
                 </Badge>
                 {draw.selected_at ? (
                   <span className="text-xs text-muted-foreground">

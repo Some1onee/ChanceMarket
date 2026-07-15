@@ -15,14 +15,7 @@ type TableDef<Row> = {
 };
 
 export type UserRole =
-  | "user"
-  | "seller"
-  | "moderator"
-  | "compliance"
-  | "support"
-  | "finance"
-  | "admin"
-  | "super_admin";
+  "user" | "seller" | "moderator" | "compliance" | "support" | "finance" | "admin" | "super_admin";
 
 export type CampaignStatus =
   | "draft"
@@ -63,34 +56,17 @@ export type PaymentStatus =
   | "disputed";
 
 export type PayoutStatus =
-  | "pending"
-  | "held"
-  | "approved"
-  | "processing"
-  | "paid"
-  | "failed"
-  | "reversed";
+  "pending" | "held" | "approved" | "processing" | "paid" | "failed" | "reversed";
 
 export type VerificationStatus =
-  | "not_started"
-  | "pending"
-  | "verified"
-  | "failed"
-  | "manual_review"
-  | "expired";
+  "not_started" | "pending" | "verified" | "failed" | "manual_review" | "expired";
 
 export type EntryStatus = "pending" | "confirmed" | "cancelled" | "excluded";
 
 export type EntrySource = "paid" | "free_route" | "promotional";
 
 export type OrderStatus =
-  | "pending"
-  | "awaiting_payment"
-  | "processing"
-  | "confirmed"
-  | "cancelled"
-  | "failed"
-  | "refunded";
+  "pending" | "awaiting_payment" | "processing" | "confirmed" | "cancelled" | "failed" | "refunded";
 
 export type DrawStatus =
   | "pending"
@@ -118,11 +94,7 @@ export type FulfilmentStatus =
 export type SellerStatus = "pending" | "approved" | "suspended" | "rejected";
 
 export type ModerationDecision =
-  | "pending"
-  | "approved"
-  | "changes_requested"
-  | "rejected"
-  | "escalated";
+  "pending" | "approved" | "changes_requested" | "rejected" | "escalated";
 
 export type ProfileRow = {
   id: string;
@@ -140,7 +112,7 @@ export type ProfileRow = {
   marketing_opt_in: boolean;
   created_at: string;
   updated_at: string;
-}
+};
 
 export type UserRoleRow = {
   id: string;
@@ -148,7 +120,7 @@ export type UserRoleRow = {
   role: UserRole;
   granted_by: string | null;
   created_at: string;
-}
+};
 
 export type UserPrivateDetailsRow = {
   user_id: string;
@@ -157,7 +129,7 @@ export type UserPrivateDetailsRow = {
   phone: string | null;
   created_at: string;
   updated_at: string;
-}
+};
 
 export type UserConsentRow = {
   id: string;
@@ -166,7 +138,7 @@ export type UserConsentRow = {
   granted: boolean;
   version: string;
   created_at: string;
-}
+};
 
 export type UserProtectionSettingsRow = {
   user_id: string;
@@ -179,7 +151,7 @@ export type UserProtectionSettingsRow = {
   marketing_blocked: boolean;
   created_at: string;
   updated_at: string;
-}
+};
 
 export type CategoryRow = {
   id: string;
@@ -191,7 +163,7 @@ export type CategoryRow = {
   is_active: boolean;
   requires_extra_review: boolean;
   created_at: string;
-}
+};
 
 export type CampaignRow = {
   id: string;
@@ -227,7 +199,7 @@ export type CampaignRow = {
   rejection_reason: string | null;
   created_at: string;
   updated_at: string;
-}
+};
 
 export type CampaignImageRow = {
   id: string;
@@ -237,7 +209,7 @@ export type CampaignImageRow = {
   sort_order: number;
   is_cover: boolean;
   created_at: string;
-}
+};
 
 export type CampaignDocumentRow = {
   id: string;
@@ -247,7 +219,7 @@ export type CampaignDocumentRow = {
   status: "pending" | "accepted" | "rejected";
   notes: string | null;
   created_at: string;
-}
+};
 
 export type CampaignRulesVersionRow = {
   id: string;
@@ -257,7 +229,7 @@ export type CampaignRulesVersionRow = {
   content_md: string;
   is_current: boolean;
   created_at: string;
-}
+};
 
 export type CampaignEligibilityRegionRow = {
   id: string;
@@ -266,7 +238,7 @@ export type CampaignEligibilityRegionRow = {
   subdivision_code: string | null;
   mode: "allow" | "deny";
   created_at: string;
-}
+};
 
 export type CampaignQuestionRow = {
   id: string;
@@ -277,14 +249,14 @@ export type CampaignQuestionRow = {
   answered_at: string | null;
   is_public: boolean;
   created_at: string;
-}
+};
 
 export type FavoriteRow = {
   id: string;
   user_id: string;
   campaign_id: string;
   created_at: string;
-}
+};
 
 export type JurisdictionRow = {
   id: string;
@@ -297,7 +269,7 @@ export type JurisdictionRow = {
   notes: string | null;
   created_at: string;
   updated_at: string;
-}
+};
 
 export type JurisdictionRuleRow = {
   id: string;
@@ -311,7 +283,7 @@ export type JurisdictionRuleRow = {
   approved_by: string | null;
   created_by: string | null;
   created_at: string;
-}
+};
 
 export type JurisdictionCampaignTypeRow = {
   id: string;
@@ -328,7 +300,7 @@ export type JurisdictionCampaignTypeRow = {
   effective_from: string;
   effective_until: string | null;
   created_at: string;
-}
+};
 
 export type JurisdictionCategoryRow = {
   id: string;
@@ -337,7 +309,7 @@ export type JurisdictionCategoryRow = {
   is_allowed: boolean;
   requires_extra_review: boolean;
   created_at: string;
-}
+};
 
 export type ComplianceDecisionRow = {
   id: string;
@@ -350,7 +322,7 @@ export type ComplianceDecisionRow = {
   reasons: string[];
   rule_snapshot: Record<string, unknown> | null;
   created_at: string;
-}
+};
 
 export type GeoCheckRow = {
   id: string;
@@ -362,7 +334,7 @@ export type GeoCheckRow = {
   is_consistent: boolean | null;
   flagged_reason: string | null;
   created_at: string;
-}
+};
 
 export type FeatureFlagRow = {
   key: string;
@@ -370,7 +342,7 @@ export type FeatureFlagRow = {
   description: string | null;
   updated_by: string | null;
   updated_at: string;
-}
+};
 
 export type SellerProfileRow = {
   id: string;
@@ -388,7 +360,7 @@ export type SellerProfileRow = {
   public_bio: string | null;
   created_at: string;
   updated_at: string;
-}
+};
 
 export type IdentityVerificationRow = {
   id: string;
@@ -401,7 +373,7 @@ export type IdentityVerificationRow = {
   expires_at: string | null;
   created_at: string;
   updated_at: string;
-}
+};
 
 export type EntryOrderRow = {
   id: string;
@@ -420,7 +392,7 @@ export type EntryOrderRow = {
   skill_response_id: string | null;
   created_at: string;
   updated_at: string;
-}
+};
 
 export type EntryRow = {
   id: string;
@@ -431,7 +403,7 @@ export type EntryRow = {
   source: EntrySource;
   status: EntryStatus;
   created_at: string;
-}
+};
 
 export type FreeEntryRequestRow = {
   id: string;
@@ -444,7 +416,7 @@ export type FreeEntryRequestRow = {
   processed_at: string | null;
   order_id: string | null;
   created_at: string;
-}
+};
 
 export type SkillQuestionRow = {
   id: string;
@@ -453,19 +425,19 @@ export type SkillQuestionRow = {
   question: string;
   is_current: boolean;
   created_at: string;
-}
+};
 
 export type SkillQuestionOptionRow = {
   id: string;
   question_id: string;
   label: string;
   sort_order: number;
-}
+};
 
 export type SkillQuestionAnswerRow = {
   question_id: string;
   correct_option_id: string;
-}
+};
 
 export type SkillResponseRow = {
   id: string;
@@ -474,7 +446,7 @@ export type SkillResponseRow = {
   option_id: string;
   is_correct: boolean;
   created_at: string;
-}
+};
 
 export type PaymentCustomerRow = {
   id: string;
@@ -482,7 +454,7 @@ export type PaymentCustomerRow = {
   provider: string;
   provider_customer_id: string;
   created_at: string;
-}
+};
 
 export type PaymentTransactionRow = {
   id: string;
@@ -498,7 +470,7 @@ export type PaymentTransactionRow = {
   refunded_minor: number;
   created_at: string;
   updated_at: string;
-}
+};
 
 export type RefundRow = {
   id: string;
@@ -511,7 +483,7 @@ export type RefundRow = {
   requested_by: string | null;
   created_at: string;
   updated_at: string;
-}
+};
 
 export type FinancialLedgerRow = {
   id: string;
@@ -536,7 +508,7 @@ export type FinancialLedgerRow = {
   memo: string | null;
   idempotency_key: string | null;
   created_at: string;
-}
+};
 
 export type SellerBalanceRow = {
   seller_id: string;
@@ -545,7 +517,7 @@ export type SellerBalanceRow = {
   reserved_minor: number;
   pending_minor: number;
   updated_at: string;
-}
+};
 
 export type PayoutRow = {
   id: string;
@@ -559,7 +531,7 @@ export type PayoutRow = {
   failure_reason: string | null;
   created_at: string;
   updated_at: string;
-}
+};
 
 export type PlatformFeeRow = {
   id: string;
@@ -568,7 +540,7 @@ export type PlatformFeeRow = {
   fixed_minor: number;
   currency: string;
   created_at: string;
-}
+};
 
 export type DrawRow = {
   id: string;
@@ -588,7 +560,7 @@ export type DrawRow = {
   reroll_second_approver: string | null;
   created_at: string;
   updated_at: string;
-}
+};
 
 export type DrawSnapshotRow = {
   id: string;
@@ -598,14 +570,14 @@ export type DrawSnapshotRow = {
   snapshot_hash: string;
   rules_version_id: string | null;
   created_at: string;
-}
+};
 
 export type DrawEntryRow = {
   id: string;
   snapshot_id: string;
   entry_id: string;
   position: number;
-}
+};
 
 export type WinnerVerificationRow = {
   id: string;
@@ -617,7 +589,7 @@ export type WinnerVerificationRow = {
   verified_by: string | null;
   created_at: string;
   updated_at: string;
-}
+};
 
 export type PrizeFulfilmentRow = {
   id: string;
@@ -630,7 +602,7 @@ export type PrizeFulfilmentRow = {
   notes: string | null;
   created_at: string;
   updated_at: string;
-}
+};
 
 export type NotificationRow = {
   id: string;
@@ -641,7 +613,7 @@ export type NotificationRow = {
   href: string | null;
   read_at: string | null;
   created_at: string;
-}
+};
 
 export type NotificationPreferenceRow = {
   user_id: string;
@@ -650,7 +622,7 @@ export type NotificationPreferenceRow = {
   inapp_campaign_updates: boolean;
   inapp_draw_results: boolean;
   updated_at: string;
-}
+};
 
 export type ReportRow = {
   id: string;
@@ -663,7 +635,7 @@ export type ReportRow = {
   handled_by: string | null;
   created_at: string;
   updated_at: string;
-}
+};
 
 export type DisputeRow = {
   id: string;
@@ -677,7 +649,7 @@ export type DisputeRow = {
   handled_by: string | null;
   created_at: string;
   updated_at: string;
-}
+};
 
 export type SupportThreadRow = {
   id: string;
@@ -686,7 +658,7 @@ export type SupportThreadRow = {
   status: "open" | "pending_user" | "pending_support" | "closed";
   created_at: string;
   updated_at: string;
-}
+};
 
 export type SupportMessageRow = {
   id: string;
@@ -695,7 +667,7 @@ export type SupportMessageRow = {
   is_staff: boolean;
   body: string;
   created_at: string;
-}
+};
 
 export type ModerationCaseRow = {
   id: string;
@@ -709,7 +681,7 @@ export type ModerationCaseRow = {
   decided_at: string | null;
   created_at: string;
   updated_at: string;
-}
+};
 
 export type AdminActionRow = {
   id: string;
@@ -721,7 +693,7 @@ export type AdminActionRow = {
   metadata: Record<string, unknown> | null;
   second_approver_id: string | null;
   created_at: string;
-}
+};
 
 export type AuditLogRow = {
   id: string;
@@ -731,7 +703,7 @@ export type AuditLogRow = {
   subject_id: string | null;
   data: Record<string, unknown> | null;
   created_at: string;
-}
+};
 
 export type WebhookEventRow = {
   id: string;
@@ -743,7 +715,7 @@ export type WebhookEventRow = {
   error: string | null;
   received_at: string;
   processed_at: string | null;
-}
+};
 
 export type OutboxEventRow = {
   id: string;
@@ -755,7 +727,7 @@ export type OutboxEventRow = {
   last_error: string | null;
   created_at: string;
   processed_at: string | null;
-}
+};
 
 export type Database = {
   public: {

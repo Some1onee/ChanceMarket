@@ -269,7 +269,8 @@ async function recordEntryPaymentLedger(
     .eq("campaign_id", campaignId)
     .maybeSingle();
   const basisPoints = fee?.basis_points ?? PLATFORM_FEE_FALLBACK_BP;
-  const feeMinor = Math.round((transaction.amount_minor * basisPoints) / 10_000) + (fee?.fixed_minor ?? 0);
+  const feeMinor =
+    Math.round((transaction.amount_minor * basisPoints) / 10_000) + (fee?.fixed_minor ?? 0);
 
   const entries: Array<{
     entry_type: string;

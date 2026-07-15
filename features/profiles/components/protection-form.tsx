@@ -137,8 +137,8 @@ export function ProtectionForm({
         <CardHeader>
           <CardTitle>Self-exclusion</CardTitle>
           <CardDescription>
-            Blocks all entries and marketing for the chosen period. This cannot be undone early.
-            If participation stops feeling fun, free confidential help is listed on our{" "}
+            Blocks all entries and marketing for the chosen period. This cannot be undone early. If
+            participation stops feeling fun, free confidential help is listed on our{" "}
             <a href="/responsible-participation" className="underline underline-offset-2">
               responsible participation
             </a>{" "}
@@ -178,7 +178,10 @@ export function ProtectionForm({
                   </AlertDialogHeader>
                   <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction variant="destructive" onClick={() => void selfExclude(months)}>
+                    <AlertDialogAction
+                      variant="destructive"
+                      onClick={() => void selfExclude(months)}
+                    >
                       Confirm self-exclusion
                     </AlertDialogAction>
                   </AlertDialogFooter>

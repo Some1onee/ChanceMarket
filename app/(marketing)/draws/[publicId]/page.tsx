@@ -28,7 +28,9 @@ export default async function DrawVerificationPage({
 
   const { data: draw } = await supabase
     .from("draws")
-    .select("*, campaigns(title, slug), draw_snapshots!d_snapshot_fk(entries_count, snapshot_hash, created_at)")
+    .select(
+      "*, campaigns(title, slug), draw_snapshots!d_snapshot_fk(entries_count, snapshot_hash, created_at)",
+    )
     .eq("public_id", publicId)
     .maybeSingle();
 
@@ -62,7 +64,10 @@ export default async function DrawVerificationPage({
         {row.campaigns ? (
           <p className="text-muted-foreground">
             Campaign:{" "}
-            <Link href={`/campaigns/${row.campaigns.slug}`} className="text-primary underline-offset-2 hover:underline">
+            <Link
+              href={`/campaigns/${row.campaigns.slug}`}
+              className="text-primary underline-offset-2 hover:underline"
+            >
               {row.campaigns.title}
             </Link>
           </p>
@@ -76,7 +81,13 @@ export default async function DrawVerificationPage({
           </dt>
           <dd>
             <Badge
-              variant={row.status === "winner_verified" ? "success" : row.status === "rerolled" ? "warning" : "info"}
+              variant={
+                row.status === "winner_verified"
+                  ? "success"
+                  : row.status === "rerolled"
+                    ? "warning"
+                    : "info"
+              }
               className="capitalize"
             >
               {row.status.replaceAll("_", " ")}
@@ -136,7 +147,8 @@ export default async function DrawVerificationPage({
                 Winning position
               </dt>
               <dd className="font-mono text-lg font-semibold">
-                #{winnerPosition?.toLocaleString(locale)} of {snapshot?.entries_count.toLocaleString(locale)}
+                #{winnerPosition?.toLocaleString(locale)} of{" "}
+                {snapshot?.entries_count.toLocaleString(locale)}
               </dd>
             </div>
             {row.selected_at ? (
@@ -167,7 +179,10 @@ export default async function DrawVerificationPage({
               {(rerolls ?? []).map((reroll) => (
                 <li key={reroll.public_id}>
                   Superseded by{" "}
-                  <Link href={`/draws/${reroll.public_id}`} className="underline underline-offset-2">
+                  <Link
+                    href={`/draws/${reroll.public_id}`}
+                    className="underline underline-offset-2"
+                  >
                     {reroll.public_id}
                   </Link>{" "}
                   — reason: {reroll.reroll_reason ?? "recorded in the audit log"} (dual admin
@@ -183,9 +198,9 @@ export default async function DrawVerificationPage({
         <h2 className="font-semibold text-foreground">How to verify</h2>
         <ol className="list-decimal space-y-2 pl-5">
           <li>
-            The snapshot hash is the SHA-256 of the ordered eligible entry list
-            (<code className="font-mono text-xs">position:entry_id</code> lines). It was fixed
-            before selection and cannot change afterwards.
+            The snapshot hash is the SHA-256 of the ordered eligible entry list (
+            <code className="font-mono text-xs">position:entry_id</code> lines). It was fixed before
+            selection and cannot change afterwards.
           </li>
           <li>
             The winning position equals{" "}

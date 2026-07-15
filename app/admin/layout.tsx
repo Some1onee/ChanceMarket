@@ -29,7 +29,10 @@ export default async function AdminLayout({ children }: { children: React.ReactN
               {user.email} · {user.roles.filter((role) => role !== "user").join(", ") || "staff"}
             </span>
             <ThemeToggle />
-            <Link href="/" className="text-sm text-muted-foreground hover:text-foreground hover:underline">
+            <Link
+              href="/"
+              className="text-sm text-muted-foreground hover:text-foreground hover:underline"
+            >
               Exit
             </Link>
           </div>

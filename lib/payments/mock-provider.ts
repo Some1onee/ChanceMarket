@@ -84,7 +84,11 @@ export class MockPaymentProvider implements PaymentProvider {
   }
 
   async createSellerAccount(params: { sellerId: string }): Promise<SellerAccount> {
-    return { id: `mock_acct_${params.sellerId.slice(0, 8)}`, status: "enabled", onboardingUrl: null };
+    return {
+      id: `mock_acct_${params.sellerId.slice(0, 8)}`,
+      status: "enabled",
+      onboardingUrl: null,
+    };
   }
 
   async getSellerAccountStatus(params: { accountId: string }): Promise<SellerAccount> {
@@ -119,11 +123,10 @@ export class MockPaymentProvider implements PaymentProvider {
   }
 
   /** Simulate the provider's async outcome for an intent (used in dev/tests). */
-  buildOutcomeWebhook(params: {
-    intentId: string;
-    amountMinor: number;
-    currency: string;
-  }): { payload: string; signature: string } {
+  buildOutcomeWebhook(params: { intentId: string; amountMinor: number; currency: string }): {
+    payload: string;
+    signature: string;
+  } {
     const declined = params.amountMinor % 100 === 99;
     const payload = JSON.stringify({
       id: `mock_evt_${randomUUID()}`,

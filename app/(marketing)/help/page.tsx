@@ -9,7 +9,10 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 
-export const metadata = buildMetadata("Help Centre", "Answers to common questions, and how to reach support.");
+export const metadata = buildMetadata(
+  "Help Centre",
+  "Answers to common questions, and how to reach support.",
+);
 
 const FAQS: { q: string; a: string }[] = [
   {
@@ -40,7 +43,11 @@ const FAQS: { q: string; a: string }[] = [
 
 export default function HelpPage() {
   return (
-    <Section eyebrow="Support" title="Help centre" description="Quick answers first — humans right behind.">
+    <Section
+      eyebrow="Support"
+      title="Help centre"
+      description="Quick answers first — humans right behind."
+    >
       <Accordion type="single" collapsible className="w-full">
         {FAQS.map((faq, index) => (
           <AccordionItem key={index} value={`faq-${index}`}>

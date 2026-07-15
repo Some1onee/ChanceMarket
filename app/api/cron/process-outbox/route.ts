@@ -63,7 +63,11 @@ export async function GET(request: NextRequest) {
 
     try {
       if (event.topic === "notification.created") {
-        const payload = event.payload as { notification_id?: string; user_id?: string; kind?: string };
+        const payload = event.payload as {
+          notification_id?: string;
+          user_id?: string;
+          kind?: string;
+        };
         const templateKey = payload.kind ? KIND_TO_TEMPLATE[payload.kind] : undefined;
 
         if (templateKey && payload.user_id && payload.notification_id) {

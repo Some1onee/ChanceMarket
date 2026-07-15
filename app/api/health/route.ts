@@ -6,7 +6,9 @@ export async function GET() {
   const checks: Record<string, "ok" | "fail"> = { app: "ok", database: "fail" };
   try {
     const supabase = await getSupabaseServerClient();
-    const { error } = await supabase.from("categories").select("id", { head: true, count: "exact" });
+    const { error } = await supabase
+      .from("categories")
+      .select("id", { head: true, count: "exact" });
     checks.database = error ? "fail" : "ok";
   } catch {
     checks.database = "fail";

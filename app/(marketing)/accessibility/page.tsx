@@ -1,7 +1,10 @@
 import { ProsePage, buildMetadata } from "@/components/marketing/prose-page";
 import { brand } from "@/lib/config/brand";
 
-export const metadata = buildMetadata("Accessibility", "Our accessibility commitment and how to reach us.");
+export const metadata = buildMetadata(
+  "Accessibility",
+  "Our accessibility commitment and how to reach us.",
+);
 
 export default function AccessibilityPage() {
   return (

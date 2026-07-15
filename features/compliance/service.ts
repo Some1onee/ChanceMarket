@@ -37,7 +37,8 @@ export async function resolveEffectiveLocation(): Promise<{
   const countryCode = ipLocation.countryCode ?? declaredCountry;
   const subdivisionCode =
     ipLocation.countryCode !== null
-      ? (ipLocation.subdivisionCode ?? (ipLocation.countryCode === declaredCountry ? declaredSubdivision : null))
+      ? (ipLocation.subdivisionCode ??
+        (ipLocation.countryCode === declaredCountry ? declaredSubdivision : null))
       : declaredSubdivision;
 
   const locationMismatch =

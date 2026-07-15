@@ -125,7 +125,13 @@ export async function moderateCampaignAction(input: unknown): Promise<ActionResu
       });
     }
 
-    await logAdminAction(actor, `moderation_${data.decision}`, "campaign", data.campaignId, data.reason);
+    await logAdminAction(
+      actor,
+      `moderation_${data.decision}`,
+      "campaign",
+      data.campaignId,
+      data.reason,
+    );
     revalidatePath("/admin/moderation");
     return undefined;
   });
@@ -161,7 +167,10 @@ export async function decideSellerAction(input: unknown): Promise<ActionResult<u
     if (data.decision === "approved") {
       await admin
         .from("user_roles")
-        .upsert({ user_id: seller.user_id, role: "seller", granted_by: actor.id }, { onConflict: "user_id,role" });
+        .upsert(
+          { user_id: seller.user_id, role: "seller", granted_by: actor.id },
+          { onConflict: "user_id,role" },
+        );
     }
 
     await admin.rpc("enqueue_notification", {
@@ -190,14 +199,23 @@ const closeNowSchema = z.object({
   reason: justificationSchema,
 });
 
-export async function closeCampaignNowAction(input: unknown): Promise<ActionResult<{ publicId: string }>> {
+export async function closeCampaignNowAction(
+  input: unknown,
+): Promise<ActionResult<{ publicId: string }>> {
   return toActionResult(async () => {
     const actor = await requireRole("admin");
     const data = closeNowSchema.parse(input);
     const result = await runCampaignClosePipeline(data.campaignId);
-    await logAdminAction(actor, "campaign_closed_manually", "campaign", data.campaignId, data.reason, {
-      drawId: result.drawId,
-    });
+    await logAdminAction(
+      actor,
+      "campaign_closed_manually",
+      "campaign",
+      data.campaignId,
+      data.reason,
+      {
+        drawId: result.drawId,
+      },
+    );
     revalidatePath("/admin/draws");
     return { publicId: result.publicId };
   });
@@ -267,7 +285,9 @@ const rerollSchema = z.object({
  * Controlled re-draw: mandatory reason + a SECOND admin (distinct from the
  * actor) named by email. The SQL function re-validates both approvers.
  */
-export async function rerollDrawAction(input: unknown): Promise<ActionResult<{ publicId: string }>> {
+export async function rerollDrawAction(
+  input: unknown,
+): Promise<ActionResult<{ publicId: string }>> {
   return toActionResult(async () => {
     const actor = await requireRole("admin");
     const data = rerollSchema.parse(input);
@@ -295,9 +315,17 @@ export async function rerollDrawAction(input: unknown): Promise<ActionResult<{ p
     });
     if (selectError) throw new AppError("state_conflict", selectError.message);
 
-    await logAdminAction(actor, "draw_rerolled", "draw", data.drawId, data.reason, {
-      newDrawId: newDraw.id,
-    }, second.id);
+    await logAdminAction(
+      actor,
+      "draw_rerolled",
+      "draw",
+      data.drawId,
+      data.reason,
+      {
+        newDrawId: newDraw.id,
+      },
+      second.id,
+    );
     revalidatePath("/admin/draws");
     return { publicId: newDraw.public_id };
   });
@@ -354,9 +382,16 @@ export async function setUserRoleAction(input: unknown): Promise<ActionResult<un
     } else {
       await admin.from("user_roles").delete().eq("user_id", data.userId).eq("role", data.role);
     }
-    await logAdminAction(actor, data.grant ? "role_granted" : "role_revoked", "user", data.userId, data.reason, {
-      role: data.role,
-    });
+    await logAdminAction(
+      actor,
+      data.grant ? "role_granted" : "role_revoked",
+      "user",
+      data.userId,
+      data.reason,
+      {
+        role: data.role,
+      },
+    );
     revalidatePath("/admin/users");
     return undefined;
   });
@@ -455,7 +490,13 @@ export async function resolveDisputeAction(input: unknown): Promise<ActionResult
       .from("disputes")
       .update({ status: data.status, resolution: data.resolution, handled_by: actor.id })
       .eq("id", data.disputeId);
-    await logAdminAction(actor, `dispute_${data.status}`, "dispute", data.disputeId, data.resolution);
+    await logAdminAction(
+      actor,
+      `dispute_${data.status}`,
+      "dispute",
+      data.disputeId,
+      data.resolution,
+    );
     revalidatePath("/admin/disputes");
     return undefined;
   });

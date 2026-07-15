@@ -28,8 +28,7 @@ class HeadersGeolocationProvider implements GeolocationProvider {
     const subdivision =
       headerStore.get("x-vercel-ip-country-region") ?? headerStore.get("x-region-code");
 
-    const normalizedCountry =
-      country && /^[A-Z]{2}$/i.test(country) ? country.toUpperCase() : null;
+    const normalizedCountry = country && /^[A-Z]{2}$/i.test(country) ? country.toUpperCase() : null;
     return {
       countryCode: normalizedCountry,
       subdivisionCode:

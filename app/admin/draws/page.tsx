@@ -49,7 +49,11 @@ export default async function AdminDrawsPage() {
             return (
               <TableRow key={draw.id}>
                 <TableCell>
-                  <Link href={`/draws/${draw.public_id}`} className="font-mono text-xs text-primary hover:underline" target="_blank">
+                  <Link
+                    href={`/draws/${draw.public_id}`}
+                    className="font-mono text-xs text-primary hover:underline"
+                    target="_blank"
+                  >
                     {draw.public_id}
                   </Link>
                 </TableCell>

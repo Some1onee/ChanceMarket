@@ -63,16 +63,33 @@ export function SellerCampaignActions({
         </Button>
       ) : null}
       {status === "active" ? (
-        <Button variant="ghost" size="icon-sm" aria-label="Pause campaign" onClick={() => void transition("paused")}>
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          aria-label="Pause campaign"
+          onClick={() => void transition("paused")}
+        >
           <Pause aria-hidden />
         </Button>
       ) : null}
       {status === "paused" ? (
-        <Button variant="ghost" size="icon-sm" aria-label="Resume campaign" onClick={() => void transition("active")}>
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          aria-label="Resume campaign"
+          onClick={() => void transition("active")}
+        >
           <Play aria-hidden />
         </Button>
       ) : null}
-      {!["draft", "submitted", "under_review", "changes_requested", "rejected", "cancelled"].includes(status) ? (
+      {![
+        "draft",
+        "submitted",
+        "under_review",
+        "changes_requested",
+        "rejected",
+        "cancelled",
+      ].includes(status) ? (
         <Button variant="ghost" size="icon-sm" aria-label="View public page" asChild>
           <a href={`/campaigns/${slug}`}>
             <Eye aria-hidden />

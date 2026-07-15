@@ -137,7 +137,10 @@ export function RegionsEditor({
         <ul className="flex flex-wrap gap-2">
           {regions.map((rule, index) => (
             <li key={index}>
-              <Badge variant={rule.mode === "allow" ? "success" : "destructive"} className="gap-1.5 py-1 pr-1">
+              <Badge
+                variant={rule.mode === "allow" ? "success" : "destructive"}
+                className="gap-1.5 py-1 pr-1"
+              >
                 {rule.mode === "allow" ? "Allow" : "Exclude"}: {rule.countryCode}
                 {rule.subdivisionCode ? `-${rule.subdivisionCode}` : ""}
                 <button

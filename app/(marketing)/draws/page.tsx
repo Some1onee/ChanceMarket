@@ -60,12 +60,18 @@ export default async function DrawsPage() {
               {rows.map((draw) => (
                 <tr key={draw.id} className="border-t border-border hover:bg-muted/40">
                   <td className="px-4 py-3">
-                    <Link href={`/draws/${draw.public_id}`} className="font-mono text-xs text-primary hover:underline">
+                    <Link
+                      href={`/draws/${draw.public_id}`}
+                      className="font-mono text-xs text-primary hover:underline"
+                    >
                       {draw.public_id}
                     </Link>
                   </td>
                   <td className="px-4 py-3">
-                    <Link href={`/campaigns/${draw.campaigns?.slug ?? ""}`} className="hover:underline">
+                    <Link
+                      href={`/campaigns/${draw.campaigns?.slug ?? ""}`}
+                      className="hover:underline"
+                    >
                       {draw.campaigns?.title ?? "—"}
                     </Link>
                   </td>

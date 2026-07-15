@@ -40,8 +40,7 @@ export default async function EditCampaignPage({ params }: { params: Promise<{ i
     .maybeSingle();
 
   const row = campaign as unknown as
-    | (NonNullable<typeof campaign> & { seller_profiles: { user_id: string } })
-    | null;
+    (NonNullable<typeof campaign> & { seller_profiles: { user_id: string } }) | null;
   if (!row || row.seller_profiles.user_id !== user.id) notFound();
   if (!["draft", "changes_requested"].includes(row.status)) redirect("/seller");
 

@@ -53,7 +53,10 @@ export function NotificationsBell({
 
   return (
     <Button variant="ghost" size="icon-sm" asChild className="relative">
-      <Link href="/account/notifications" aria-label={`Notifications${unread > 0 ? ` (${unread} unread)` : ""}`}>
+      <Link
+        href="/account/notifications"
+        aria-label={`Notifications${unread > 0 ? ` (${unread} unread)` : ""}`}
+      >
         <Bell aria-hidden />
         {unread > 0 ? (
           <span

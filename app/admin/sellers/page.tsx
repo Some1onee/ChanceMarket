@@ -41,13 +41,18 @@ export default async function AdminSellersPage() {
               <TableCell>
                 <span className="font-medium">{seller.public_name}</span>
                 {seller.business_name ? (
-                  <span className="block text-xs text-muted-foreground">{seller.business_name}</span>
+                  <span className="block text-xs text-muted-foreground">
+                    {seller.business_name}
+                  </span>
                 ) : null}
               </TableCell>
               <TableCell className="capitalize">{seller.entity_type}</TableCell>
               <TableCell>{seller.country_code}</TableCell>
               <TableCell>
-                <Badge variant={seller.kyb_status === "verified" ? "success" : "warning"} className="capitalize">
+                <Badge
+                  variant={seller.kyb_status === "verified" ? "success" : "warning"}
+                  className="capitalize"
+                >
                   {seller.kyb_status.replaceAll("_", " ")}
                 </Badge>
               </TableCell>

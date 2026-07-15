@@ -31,8 +31,8 @@ export default async function AdminJurisdictionsPage() {
         <AlertDescription>
           A campaign format only works where an active jurisdiction explicitly allows it. Every
           seeded rule is flagged <code className="font-mono text-xs">requires_legal_approval</code>{" "}
-          — activate a territory only after counsel sign-off (docs/LEGAL_REVIEW_CHECKLIST.md).
-          Rules are versioned; changes are audited.
+          — activate a territory only after counsel sign-off (docs/LEGAL_REVIEW_CHECKLIST.md). Rules
+          are versioned; changes are audited.
         </AlertDescription>
       </Alert>
 
@@ -74,7 +74,10 @@ export default async function AdminJurisdictionsPage() {
                   <span className="text-xs text-muted-foreground">No formats allowed</span>
                 )}
               </div>
-              <JurisdictionToggle jurisdictionId={jurisdiction.id} isActive={jurisdiction.is_active} />
+              <JurisdictionToggle
+                jurisdictionId={jurisdiction.id}
+                isActive={jurisdiction.is_active}
+              />
             </li>
           );
         })}

@@ -15,7 +15,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { CampaignStatusBadge } from "@/components/campaigns/campaign-status-badge";
-import { NewCampaignButton, SellerCampaignActions } from "@/features/sellers/components/seller-actions";
+import {
+  NewCampaignButton,
+  SellerCampaignActions,
+} from "@/features/sellers/components/seller-actions";
 import { getDictionary } from "@/lib/localization/dictionaries";
 import { getLocale } from "@/lib/localization/locale";
 import { formatMoney, isCurrency, money } from "@/lib/money";
@@ -89,7 +92,9 @@ export default async function SellerDashboardPage() {
           <CardHeader>
             <CardTitle>Application under review</CardTitle>
             <CardDescription>
-              Our team is reviewing your seller application{seller.kyb_status !== "verified" ? " and identity verification" : ""}. You&apos;ll be notified of the decision.
+              Our team is reviewing your seller application
+              {seller.kyb_status !== "verified" ? " and identity verification" : ""}. You&apos;ll be
+              notified of the decision.
             </CardDescription>
           </CardHeader>
         </Card>
@@ -113,7 +118,17 @@ export default async function SellerDashboardPage() {
           <CardHeader className="pb-2">
             <CardDescription>Gross entry revenue</CardDescription>
             <CardTitle className="text-3xl">
-              {formatMoney(money(grossMinor, isCurrency(seller.country_code === "US" ? "USD" : "GBP") ? (seller.country_code === "US" ? "USD" : "GBP") : "GBP"), locale)}
+              {formatMoney(
+                money(
+                  grossMinor,
+                  isCurrency(seller.country_code === "US" ? "USD" : "GBP")
+                    ? seller.country_code === "US"
+                      ? "USD"
+                      : "GBP"
+                    : "GBP",
+                ),
+                locale,
+              )}
             </CardTitle>
           </CardHeader>
           <CardContent className="pt-0 text-xs text-muted-foreground">
@@ -128,7 +143,10 @@ export default async function SellerDashboardPage() {
                 ? (balances ?? [])
                     .map((balance) =>
                       formatMoney(
-                        money(balance.available_minor, isCurrency(balance.currency) ? balance.currency : "GBP"),
+                        money(
+                          balance.available_minor,
+                          isCurrency(balance.currency) ? balance.currency : "GBP",
+                        ),
                         locale,
                       ),
                     )
@@ -169,7 +187,8 @@ export default async function SellerDashboardPage() {
                 <TableRow key={campaign.id}>
                   <TableCell className="max-w-64">
                     <span className="block truncate font-medium">{campaign.title}</span>
-                    {campaign.rejection_reason && ["changes_requested", "rejected"].includes(campaign.status) ? (
+                    {campaign.rejection_reason &&
+                    ["changes_requested", "rejected"].includes(campaign.status) ? (
                       <span className="block truncate text-xs text-destructive">
                         {campaign.rejection_reason}
                       </span>
@@ -232,7 +251,10 @@ export default async function SellerDashboardPage() {
                 <TableRow key={payout.id}>
                   <TableCell>
                     {formatMoney(
-                      money(payout.amount_minor, isCurrency(payout.currency) ? payout.currency : "GBP"),
+                      money(
+                        payout.amount_minor,
+                        isCurrency(payout.currency) ? payout.currency : "GBP",
+                      ),
                       locale,
                     )}
                   </TableCell>
@@ -254,8 +276,7 @@ export default async function SellerDashboardPage() {
       <p className="text-xs text-muted-foreground">
         <PackagePlus className="mr-1 inline size-3.5" aria-hidden />
         Financial figures distinguish gross, provider fees, platform commission, taxes, reserves,
-        refunds, estimated net and paid-out amounts in the ledger-backed statement of each
-        campaign.
+        refunds, estimated net and paid-out amounts in the ledger-backed statement of each campaign.
       </p>
     </div>
   );

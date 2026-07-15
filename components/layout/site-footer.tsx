@@ -80,7 +80,10 @@ export function SiteFooter() {
           </p>
           <p>
             18+ or the minimum age in your territory. Please participate responsibly —{" "}
-            <Link href="/responsible-participation" className="underline underline-offset-2 hover:text-foreground">
+            <Link
+              href="/responsible-participation"
+              className="underline underline-offset-2 hover:text-foreground"
+            >
               set your limits
             </Link>
             .

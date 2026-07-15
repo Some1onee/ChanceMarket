@@ -43,15 +43,17 @@ export default async function AdminCampaignsPage({
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="font-display text-2xl font-bold">Campaigns</h1>
         <div className="flex flex-wrap gap-1.5 text-xs">
-          {["", "active", "under_review", "closing", "drawing", "completed", "cancelled"].map((filter) => (
-            <Link
-              key={filter || "all"}
-              href={filter ? `/admin/campaigns?status=${filter}` : "/admin/campaigns"}
-              className={`rounded-full border px-2.5 py-1 ${status === filter || (!status && !filter) ? "border-primary bg-primary-soft text-primary" : "border-border text-muted-foreground hover:bg-muted"}`}
-            >
-              {filter ? filter.replaceAll("_", " ") : "all"}
-            </Link>
-          ))}
+          {["", "active", "under_review", "closing", "drawing", "completed", "cancelled"].map(
+            (filter) => (
+              <Link
+                key={filter || "all"}
+                href={filter ? `/admin/campaigns?status=${filter}` : "/admin/campaigns"}
+                className={`rounded-full border px-2.5 py-1 ${status === filter || (!status && !filter) ? "border-primary bg-primary-soft text-primary" : "border-border text-muted-foreground hover:bg-muted"}`}
+              >
+                {filter ? filter.replaceAll("_", " ") : "all"}
+              </Link>
+            ),
+          )}
         </div>
       </div>
       <Table>
@@ -69,7 +71,11 @@ export default async function AdminCampaignsPage({
           {rows.map((campaign) => (
             <TableRow key={campaign.id}>
               <TableCell className="max-w-64">
-                <Link href={`/campaigns/${campaign.slug}`} className="block truncate font-medium hover:underline" target="_blank">
+                <Link
+                  href={`/campaigns/${campaign.slug}`}
+                  className="block truncate font-medium hover:underline"
+                  target="_blank"
+                >
                   {campaign.title}
                 </Link>
               </TableCell>

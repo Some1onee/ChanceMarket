@@ -24,7 +24,9 @@ export function ModerationControls({ caseId, campaignId }: { caseId: string; cam
         title="Approve campaign"
         description="The campaign goes live immediately (or on its scheduled start)."
         confirmLabel="Approve & publish"
-        onConfirm={(reason) => moderateCampaignAction({ caseId, campaignId, decision: "approved", reason })}
+        onConfirm={(reason) =>
+          moderateCampaignAction({ caseId, campaignId, decision: "approved", reason })
+        }
       />
       <JustifiedAction
         triggerLabel="Request changes"
@@ -41,7 +43,9 @@ export function ModerationControls({ caseId, campaignId }: { caseId: string; cam
         title="Reject campaign"
         description="Permanent rejection; the seller is notified with your reason."
         confirmLabel="Reject campaign"
-        onConfirm={(reason) => moderateCampaignAction({ caseId, campaignId, decision: "rejected", reason })}
+        onConfirm={(reason) =>
+          moderateCampaignAction({ caseId, campaignId, decision: "rejected", reason })
+        }
       />
     </div>
   );
@@ -119,7 +123,11 @@ export function WinnerControls({ drawId }: { drawId: string }) {
         title="Controlled re-draw"
         description="Requires a second admin (different person). Both approvals are recorded publicly on the draw record."
         confirmLabel="Execute re-draw"
-        extraField={{ label: "Second approver email", placeholder: "admin2@example.com", type: "email" }}
+        extraField={{
+          label: "Second approver email",
+          placeholder: "admin2@example.com",
+          type: "email",
+        }}
         onConfirm={(reason, secondApproverEmail) =>
           rerollDrawAction({ drawId, reason, secondApproverEmail })
         }
@@ -141,7 +149,11 @@ export function RefundControl({
       title="Issue refund"
       description={`Refundable balance: ${maxRefundableMinor} minor units. Partial refunds allowed.`}
       confirmLabel="Issue refund"
-      extraField={{ label: "Amount (minor units)", placeholder: String(maxRefundableMinor), type: "number" }}
+      extraField={{
+        label: "Amount (minor units)",
+        placeholder: String(maxRefundableMinor),
+        type: "number",
+      }}
       onConfirm={(reason, amount) =>
         refundPaymentAction({
           transactionId,
@@ -206,20 +218,32 @@ export function DisputeControls({ disputeId }: { disputeId: string }) {
         triggerVariant="primary"
         title="Resolve dispute"
         confirmLabel="Resolve"
-        onConfirm={(resolution) => resolveDisputeAction({ disputeId, status: "resolved", resolution })}
+        onConfirm={(resolution) =>
+          resolveDisputeAction({ disputeId, status: "resolved", resolution })
+        }
       />
       <JustifiedAction
         triggerLabel="Reject"
         destructive
         title="Reject dispute"
         confirmLabel="Reject"
-        onConfirm={(resolution) => resolveDisputeAction({ disputeId, status: "rejected", resolution })}
+        onConfirm={(resolution) =>
+          resolveDisputeAction({ disputeId, status: "rejected", resolution })
+        }
       />
     </div>
   );
 }
 
-export function UserRoleControl({ userId, role, has }: { userId: string; role: string; has: boolean }) {
+export function UserRoleControl({
+  userId,
+  role,
+  has,
+}: {
+  userId: string;
+  role: string;
+  has: boolean;
+}) {
   return (
     <JustifiedAction
       triggerLabel={has ? `Revoke ${role}` : `Grant ${role}`}

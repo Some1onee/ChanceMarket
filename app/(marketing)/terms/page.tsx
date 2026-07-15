@@ -1,7 +1,10 @@
 import { ProsePage, buildMetadata } from "@/components/marketing/prose-page";
 import { brand } from "@/lib/config/brand";
 
-export const metadata = buildMetadata("Terms of Service", "The agreement governing your use of the marketplace.");
+export const metadata = buildMetadata(
+  "Terms of Service",
+  "The agreement governing your use of the marketplace.",
+);
 
 export default function TermsPage() {
   return (

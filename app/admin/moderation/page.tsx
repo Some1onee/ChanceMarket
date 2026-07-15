@@ -44,21 +44,37 @@ export default async function ModerationPage() {
     <div className="space-y-6">
       <h1 className="font-display text-2xl font-bold">Moderation queue</h1>
       {rows.length === 0 ? (
-        <EmptyState icon={<CheckCheck aria-hidden />} title="Queue is clear" description="No campaigns are waiting for review." />
+        <EmptyState
+          icon={<CheckCheck aria-hidden />}
+          title="Queue is clear"
+          description="No campaigns are waiting for review."
+        />
       ) : (
         <ul className="space-y-4">
           {rows.map((item) => (
             <li key={item.id} className="rounded-xl border border-border bg-card p-5">
               <div className="mb-3 flex flex-wrap items-center gap-2">
                 <h2 className="font-semibold">{item.campaigns?.title}</h2>
-                <Badge variant={item.risk_score > 50 ? "destructive" : item.risk_score > 25 ? "warning" : "neutral"}>
+                <Badge
+                  variant={
+                    item.risk_score > 50
+                      ? "destructive"
+                      : item.risk_score > 25
+                        ? "warning"
+                        : "neutral"
+                  }
+                >
                   Risk {item.risk_score}
                 </Badge>
                 <Badge variant="info" className="capitalize">
                   {item.campaigns?.campaign_type.replaceAll("_", " ")}
                 </Badge>
-                {item.campaigns?.free_route_enabled ? <Badge variant="accent">Free route</Badge> : null}
-                {item.campaigns?.skill_question_required ? <Badge variant="neutral">Skill Q</Badge> : null}
+                {item.campaigns?.free_route_enabled ? (
+                  <Badge variant="accent">Free route</Badge>
+                ) : null}
+                {item.campaigns?.skill_question_required ? (
+                  <Badge variant="neutral">Skill Q</Badge>
+                ) : null}
               </div>
               <p className="mb-1 text-sm text-muted-foreground">
                 Seller: {item.campaigns?.seller_profiles?.public_name} (KYB:{" "}
@@ -85,7 +101,11 @@ export default async function ModerationPage() {
               </p>
               <p className="mb-4 text-xs text-muted-foreground">
                 Submitted {new Date(item.created_at).toLocaleString()} ·{" "}
-                <Link href={`/campaigns/${item.campaigns?.slug}`} className="underline underline-offset-2" target="_blank">
+                <Link
+                  href={`/campaigns/${item.campaigns?.slug}`}
+                  className="underline underline-offset-2"
+                  target="_blank"
+                >
                   preview listing
                 </Link>
               </p>

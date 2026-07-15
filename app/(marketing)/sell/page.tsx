@@ -59,7 +59,10 @@ export default async function SellPage() {
       >
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {PILLARS.map((pillar) => (
-            <div key={pillar.title} className="rounded-xl border border-border bg-card p-5 shadow-xs">
+            <div
+              key={pillar.title}
+              className="rounded-xl border border-border bg-card p-5 shadow-xs"
+            >
               <div className="mb-3 flex size-10 items-center justify-center rounded-lg bg-primary-soft text-primary">
                 {pillar.icon}
               </div>

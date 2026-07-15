@@ -49,10 +49,10 @@ export default async function HomePage() {
           <Badge variant="accent" className="px-3 py-1">
             <ShieldCheck aria-hidden /> Every draw is server-side, hashed and verifiable
           </Badge>
-          <h1 className="font-display max-w-3xl text-4xl font-bold tracking-tight text-balance sm:text-6xl">
+          <h1 className="max-w-3xl font-display text-4xl font-bold tracking-tight text-balance sm:text-6xl">
             {t.home.heroTitle}
           </h1>
-          <p className="max-w-2xl text-lg text-muted-foreground text-balance">
+          <p className="max-w-2xl text-lg text-balance text-muted-foreground">
             {t.home.heroSubtitle}
           </p>
 
@@ -180,12 +180,17 @@ export default async function HomePage() {
                 body: "At close, the eligible entry list is frozen and hashed, then a cryptographically secure draw selects the winner. You can audit the result on the draw's public page.",
               },
             ].map((item) => (
-              <div key={item.step} className="rounded-xl border border-border bg-card p-6 shadow-xs">
+              <div
+                key={item.step}
+                className="rounded-xl border border-border bg-card p-6 shadow-xs"
+              >
                 <div className="mb-4 flex items-center justify-between">
                   <div className="flex size-11 items-center justify-center rounded-lg bg-primary-soft text-primary">
                     {item.icon}
                   </div>
-                  <span className="font-mono text-xs text-muted-foreground">step {item.step}/3</span>
+                  <span className="font-mono text-xs text-muted-foreground">
+                    step {item.step}/3
+                  </span>
                 </div>
                 <h3 className="mb-2 font-semibold">{item.title}</h3>
                 <p className="text-sm text-muted-foreground">{item.body}</p>
@@ -239,10 +244,15 @@ export default async function HomePage() {
             <div className="verification-strip">
               snapshot_sha256: 7f9c2ba4e88f827d616045507605853ed73b8093f6efbc88eb1a6eacfa66ef26
             </div>
-            <div className="verification-strip">entries: 4,812 · selected: #2,041 · method: csprng</div>
+            <div className="verification-strip">
+              entries: 4,812 · selected: #2,041 · method: csprng
+            </div>
             <p className="pt-1 text-xs text-muted-foreground">
               Every completed campaign links to a public page like this one, with personal data
-              masked. <Link href="/draws" className="underline underline-offset-2">Browse draw records</Link>
+              masked.{" "}
+              <Link href="/draws" className="underline underline-offset-2">
+                Browse draw records
+              </Link>
             </p>
           </div>
         </div>
@@ -319,7 +329,10 @@ export default async function HomePage() {
               name: "J. Laurent — demo persona",
             },
           ].map((item) => (
-            <figure key={item.name} className="rounded-xl border border-border bg-card p-6 shadow-xs">
+            <figure
+              key={item.name}
+              className="rounded-xl border border-border bg-card p-6 shadow-xs"
+            >
               <blockquote className="text-sm leading-relaxed">“{item.quote}”</blockquote>
               <figcaption className="mt-4 text-xs font-medium text-muted-foreground">
                 {item.name}

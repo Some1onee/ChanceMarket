@@ -96,7 +96,10 @@ export default async function CampaignDetailPage({
 
   const galleryImages = [...campaign.campaign_images]
     .sort((a, b) => Number(b.is_cover) - Number(a.is_cover) || a.sort_order - b.sort_order)
-    .map((image) => ({ url: campaignImageUrl(image.storage_path), alt: image.alt_text ?? campaign.title }));
+    .map((image) => ({
+      url: campaignImageUrl(image.storage_path),
+      alt: image.alt_text ?? campaign.title,
+    }));
 
   const attributes = campaign.attributes ?? {};
   const allowRegions = extras.regions.filter((region) => region.mode === "allow");
@@ -110,11 +113,12 @@ export default async function CampaignDetailPage({
     description: campaign.summary ?? undefined,
     startDate: campaign.starts_at ?? undefined,
     endDate: campaign.ends_at ?? undefined,
-    eventStatus: isOpen
-      ? "https://schema.org/EventScheduled"
-      : "https://schema.org/EventCancelled",
+    eventStatus: isOpen ? "https://schema.org/EventScheduled" : "https://schema.org/EventCancelled",
     eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
-    location: { "@type": "VirtualLocation", url: `${process.env.NEXT_PUBLIC_APP_URL ?? ""}/campaigns/${campaign.slug}` },
+    location: {
+      "@type": "VirtualLocation",
+      url: `${process.env.NEXT_PUBLIC_APP_URL ?? ""}/campaigns/${campaign.slug}`,
+    },
     organizer: campaign.seller_profiles
       ? { "@type": "Organization", name: campaign.seller_profiles.public_name }
       : undefined,
@@ -234,7 +238,9 @@ export default async function CampaignDetailPage({
               <div>
                 <p className="text-xs text-muted-foreground">{t.campaign.entryPrice}</p>
                 <p className="text-2xl font-bold text-primary">
-                  {isFree ? "Free" : formatMoneyCompact(money(campaign.entry_price_minor, currency), locale)}
+                  {isFree
+                    ? "Free"
+                    : formatMoneyCompact(money(campaign.entry_price_minor, currency), locale)}
                 </p>
               </div>
               <div className="text-right">
@@ -248,7 +254,8 @@ export default async function CampaignDetailPage({
             <div className="space-y-1.5">
               <div className="flex justify-between text-xs text-muted-foreground">
                 <span>
-                  {campaign.entries_confirmed.toLocaleString(locale)} / {campaign.max_entries_total.toLocaleString(locale)} {t.campaign.entries}
+                  {campaign.entries_confirmed.toLocaleString(locale)} /{" "}
+                  {campaign.max_entries_total.toLocaleString(locale)} {t.campaign.entries}
                 </span>
                 <span>{progress}%</span>
               </div>
@@ -269,7 +276,10 @@ export default async function CampaignDetailPage({
                 <AlertTitle>{t.campaign.winnerAnnounced}</AlertTitle>
                 <AlertDescription>
                   {extras.draw ? (
-                    <Link href={`/draws/${extras.draw.public_id}`} className="underline underline-offset-2">
+                    <Link
+                      href={`/draws/${extras.draw.public_id}`}
+                      className="underline underline-offset-2"
+                    >
                       View the public draw record ({extras.draw.public_id})
                     </Link>
                   ) : (
@@ -327,7 +337,8 @@ export default async function CampaignDetailPage({
 
             <ul className="space-y-2 text-xs text-muted-foreground">
               <li className="flex items-center gap-2">
-                <UserRound className="size-3.5" aria-hidden /> {t.campaign.ageRestricted.replace("{age}", String(campaign.min_age))}
+                <UserRound className="size-3.5" aria-hidden />{" "}
+                {t.campaign.ageRestricted.replace("{age}", String(campaign.min_age))}
               </li>
               <li className="flex items-center gap-2">
                 <Ticket className="size-3.5" aria-hidden /> {t.campaign.maxPerUser}:{" "}
@@ -391,7 +402,9 @@ export default async function CampaignDetailPage({
               </div>
               <p className="font-medium">{campaign.seller_profiles.public_name}</p>
               {campaign.seller_profiles.public_bio ? (
-                <p className="text-sm text-muted-foreground">{campaign.seller_profiles.public_bio}</p>
+                <p className="text-sm text-muted-foreground">
+                  {campaign.seller_profiles.public_bio}
+                </p>
               ) : null}
               <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
                 <MapPin className="size-3.5" aria-hidden />

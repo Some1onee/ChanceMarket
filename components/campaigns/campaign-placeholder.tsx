@@ -43,7 +43,7 @@ export function CampaignPlaceholder({
       }}
     >
       {label ? (
-        <span className="font-display px-4 text-center text-lg font-semibold text-white/85">
+        <span className="px-4 text-center font-display text-lg font-semibold text-white/85">
           {label}
         </span>
       ) : null}

@@ -86,7 +86,12 @@ export default async function CampaignsPage({
       ) : view === "list" ? (
         <div className="flex flex-col gap-4">
           {campaigns.map((campaign) => (
-            <CampaignListItem key={campaign.id} campaign={campaign} locale={locale} dictionary={t} />
+            <CampaignListItem
+              key={campaign.id}
+              campaign={campaign}
+              locale={locale}
+              dictionary={t}
+            />
           ))}
         </div>
       ) : (

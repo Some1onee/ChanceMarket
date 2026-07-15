@@ -1,0 +1,130 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Dummy public values for build-time only — real values come from the
+  # deployment platform. No secrets are stored in this file.
+  NEXT_PUBLIC_APP_URL: http://localhost:3000
+  NEXT_PUBLIC_APP_NAME: ChanceMarket
+  NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:54321
+  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ci-placeholder-key
+
+jobs:
+  quality:
+    name: Lint · Typecheck · Unit tests · Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Format check
+        run: pnpm format:check
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Unit tests
+        run: pnpm test
+
+      - name: Production build
+        run: pnpm build
+
+      - name: Dependency audit (production, high+)
+        run: pnpm audit --prod --audit-level high
+
+  database:
+    name: Migrations · Integration · E2E
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Start local Supabase (applies ALL migrations + seed)
+        run: supabase start
+
+      - name: Verify migrations are reproducible
+        run: supabase db reset
+
+      - name: Export local credentials
+        id: creds
+        run: |
+          supabase status -o env > supabase.env
+          cat supabase.env >> "$GITHUB_ENV"
+
+      - name: Integration tests (RLS, entry pipeline, draws)
+        env:
+          SUPABASE_TEST_URL: ${{ env.API_URL }}
+          SUPABASE_TEST_ANON_KEY: ${{ env.ANON_KEY }}
+          SUPABASE_TEST_SECRET_KEY: ${{ env.SERVICE_ROLE_KEY }}
+        run: pnpm test:integration
+
+      - name: Build app against local stack
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ env.API_URL }}
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ env.ANON_KEY }}
+          SUPABASE_SECRET_KEY: ${{ env.SERVICE_ROLE_KEY }}
+        run: pnpm build
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: E2E tests (desktop + mobile)
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ env.API_URL }}
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ env.ANON_KEY }}
+          SUPABASE_SECRET_KEY: ${{ env.SERVICE_ROLE_KEY }}
+          PAYMENT_PROVIDER: mock
+          PAYMENT_WEBHOOK_SECRET: ci-webhook-secret
+          EMAIL_PROVIDER: log
+          GEOLOCATION_PROVIDER: headers
+          KYC_PROVIDER: mock
+          CM_DEV_GEO: GB
+          APP_ENCRYPTION_KEY: ci-encryption-key-0000000000000000
+          CRON_SECRET: ci-cron-secret
+          INTERNAL_API_SECRET: ci-internal-secret
+          ENABLE_REAL_PAYMENTS: "false"
+          ENABLE_PAID_ENTRIES: "true"
+          ENABLE_FREE_ENTRIES: "true"
+          ENABLE_SKILL_COMPETITIONS: "true"
+        run: pnpm test:e2e
+
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

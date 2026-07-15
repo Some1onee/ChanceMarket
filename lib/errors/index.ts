@@ -75,8 +75,7 @@ function defaultStatus(code: ErrorCode): number {
 }
 
 export type ActionResult<T = undefined> =
-  | { ok: true; data: T }
-  | { ok: false; code: ErrorCode; message: string };
+  { ok: true; data: T } | { ok: false; code: ErrorCode; message: string };
 
 export function ok<T>(data: T): ActionResult<T> {
   return { ok: true, data };

@@ -80,7 +80,9 @@ export function CampaignCard({
               </span>
               <span className="inline-flex items-center gap-1">
                 <Clock className="size-3" aria-hidden />
-                {ended ? dictionary.campaign.ended : formatRelativeEnd(campaign.ends_at ?? new Date(), locale)}
+                {ended
+                  ? dictionary.campaign.ended
+                  : formatRelativeEnd(campaign.ends_at ?? new Date(), locale)}
               </span>
             </div>
             <Progress value={progress} aria-label={`${progress}% of entries allocated`} />
@@ -88,7 +90,9 @@ export function CampaignCard({
 
           <div className="flex items-center justify-between border-t border-border pt-3">
             <div className="text-sm">
-              <span className="text-xs text-muted-foreground">{dictionary.campaign.prizeValue} </span>
+              <span className="text-xs text-muted-foreground">
+                {dictionary.campaign.prizeValue}{" "}
+              </span>
               <span className="font-semibold">
                 {formatMoneyCompact(money(campaign.prize_value_minor, currency), locale)}
               </span>

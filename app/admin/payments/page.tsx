@@ -53,7 +53,9 @@ export default async function AdminPaymentsPage() {
             const refundable = transaction.amount_minor - transaction.refunded_minor;
             return (
               <TableRow key={transaction.id}>
-                <TableCell className="font-mono text-xs">{transaction.provider_intent_id}</TableCell>
+                <TableCell className="font-mono text-xs">
+                  {transaction.provider_intent_id}
+                </TableCell>
                 <TableCell>{formatMoney(money(transaction.amount_minor, currency))}</TableCell>
                 <TableCell>
                   {transaction.refunded_minor > 0
@@ -61,7 +63,10 @@ export default async function AdminPaymentsPage() {
                     : "—"}
                 </TableCell>
                 <TableCell>
-                  <Badge variant={STATUS_VARIANT[transaction.status] ?? "neutral"} className="capitalize">
+                  <Badge
+                    variant={STATUS_VARIANT[transaction.status] ?? "neutral"}
+                    className="capitalize"
+                  >
                     {transaction.status.replaceAll("_", " ")}
                   </Badge>
                 </TableCell>
@@ -72,7 +77,10 @@ export default async function AdminPaymentsPage() {
                   {["succeeded", "partially_refunded", "disputed"].includes(transaction.status) &&
                   refundable > 0 ? (
                     <div className="flex justify-end">
-                      <RefundControl transactionId={transaction.id} maxRefundableMinor={refundable} />
+                      <RefundControl
+                        transactionId={transaction.id}
+                        maxRefundableMinor={refundable}
+                      />
                     </div>
                   ) : null}
                 </TableCell>

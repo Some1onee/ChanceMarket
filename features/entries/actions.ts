@@ -198,7 +198,10 @@ export async function requestFreeRouteEntryAction(
       .eq("method", "online_form")
       .maybeSingle();
     if (existing) {
-      throw new AppError("limit_reached", "You have already used the online free entry route for this campaign.");
+      throw new AppError(
+        "limit_reached",
+        "You have already used the online free entry route for this campaign.",
+      );
     }
 
     const { data: request, error } = await supabase
@@ -212,7 +215,8 @@ export async function requestFreeRouteEntryAction(
       })
       .select("id")
       .single();
-    if (error || !request) throw new AppError("internal", "Could not record your free entry request.");
+    if (error || !request)
+      throw new AppError("internal", "Could not record your free entry request.");
 
     // Issue the entry with IDENTICAL chances: one confirmed free-route entry.
     const idempotencyKey = `free-route:${data.campaignId}`;

@@ -109,7 +109,9 @@ export function JustifiedAction({
             variant={destructive ? "destructive" : "primary"}
             onClick={() => void confirm()}
             loading={busy}
-            disabled={justification.trim().length < 10 || (extraField ? extraValue.trim() === "" : false)}
+            disabled={
+              justification.trim().length < 10 || (extraField ? extraValue.trim() === "" : false)
+            }
           >
             {confirmLabel}
           </Button>

@@ -6,14 +6,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { Check, ChevronLeft, ChevronRight, CloudUpload, Send } from "lucide-react";
-import {
-  wizardDraftSchema,
-  type WizardDraftInput,
-} from "@/features/campaigns/wizard-schema";
-import {
-  saveDraftCampaignAction,
-  submitCampaignAction,
-} from "@/features/campaigns/wizard-actions";
+import { wizardDraftSchema, type WizardDraftInput } from "@/features/campaigns/wizard-schema";
+import { saveDraftCampaignAction, submitCampaignAction } from "@/features/campaigns/wizard-actions";
 import type { AllowedTypeOption } from "@/features/compliance/seller-options";
 import type { CategoryRow } from "@/lib/supabase/database.types";
 import { ImageUploader, type WizardImage } from "./image-uploader";
@@ -132,7 +126,15 @@ export function CampaignWizard({
     if (isFreeType && values.entryPriceMinor !== 0) {
       form.setValue("entryPriceMinor", 0);
     }
-  }, [selectedType, isFreeType, values.freeRouteEnabled, values.skillQuestionRequired, values.minAge, values.entryPriceMinor, form]);
+  }, [
+    selectedType,
+    isFreeType,
+    values.freeRouteEnabled,
+    values.skillQuestionRequired,
+    values.minAge,
+    values.entryPriceMinor,
+    form,
+  ]);
 
   async function submit() {
     setSubmitting(true);
@@ -174,8 +176,15 @@ export function CampaignWizard({
           </li>
         ))}
         <li className="ml-auto flex items-center gap-1.5 text-xs text-muted-foreground">
-          <CloudUpload className={cn("size-3.5", saving && "animate-pulse text-primary")} aria-hidden />
-          {saving ? "Saving…" : lastSaved ? `Saved ${lastSaved.toLocaleTimeString()}` : "Autosave on"}
+          <CloudUpload
+            className={cn("size-3.5", saving && "animate-pulse text-primary")}
+            aria-hidden
+          />
+          {saving
+            ? "Saving…"
+            : lastSaved
+              ? `Saved ${lastSaved.toLocaleTimeString()}`
+              : "Autosave on"}
         </li>
       </ol>
 
@@ -255,7 +264,10 @@ export function CampaignWizard({
                   <FormItem>
                     <FormLabel>Title</FormLabel>
                     <FormControl>
-                      <Input placeholder="e.g. Aurora carbon gravel bike — full Ultegra build" {...field} />
+                      <Input
+                        placeholder="e.g. Aurora carbon gravel bike — full Ultegra build"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -268,7 +280,12 @@ export function CampaignWizard({
                   <FormItem className="sm:col-span-2">
                     <FormLabel>Short summary</FormLabel>
                     <FormControl>
-                      <Textarea rows={2} maxLength={240} placeholder="One or two sentences shown on cards and search results." {...field} />
+                      <Textarea
+                        rows={2}
+                        maxLength={240}
+                        placeholder="One or two sentences shown on cards and search results."
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -312,7 +329,9 @@ export function CampaignWizard({
                           onChange={(event) => field.onChange(Number(event.target.value))}
                         />
                       </FormControl>
-                      <FormDescription>Supported by your ownership/valuation documents.</FormDescription>
+                      <FormDescription>
+                        Supported by your ownership/valuation documents.
+                      </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -400,7 +419,12 @@ export function CampaignWizard({
                   <FormItem>
                     <FormLabel>Total entries available</FormLabel>
                     <FormControl>
-                      <Input type="number" min={10} value={field.value} onChange={(event) => field.onChange(Number(event.target.value))} />
+                      <Input
+                        type="number"
+                        min={10}
+                        value={field.value}
+                        onChange={(event) => field.onChange(Number(event.target.value))}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -413,7 +437,12 @@ export function CampaignWizard({
                   <FormItem>
                     <FormLabel>Min entries per order</FormLabel>
                     <FormControl>
-                      <Input type="number" min={1} value={field.value} onChange={(event) => field.onChange(Number(event.target.value))} />
+                      <Input
+                        type="number"
+                        min={1}
+                        value={field.value}
+                        onChange={(event) => field.onChange(Number(event.target.value))}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -426,7 +455,12 @@ export function CampaignWizard({
                   <FormItem>
                     <FormLabel>Max entries per order</FormLabel>
                     <FormControl>
-                      <Input type="number" min={1} value={field.value} onChange={(event) => field.onChange(Number(event.target.value))} />
+                      <Input
+                        type="number"
+                        min={1}
+                        value={field.value}
+                        onChange={(event) => field.onChange(Number(event.target.value))}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -439,7 +473,12 @@ export function CampaignWizard({
                   <FormItem>
                     <FormLabel>Max entries per person</FormLabel>
                     <FormControl>
-                      <Input type="number" min={1} value={field.value} onChange={(event) => field.onChange(Number(event.target.value))} />
+                      <Input
+                        type="number"
+                        min={1}
+                        value={field.value}
+                        onChange={(event) => field.onChange(Number(event.target.value))}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -647,7 +686,12 @@ export function CampaignWizard({
 
           {/* Nav */}
           <div className="flex items-center justify-between border-t border-border pt-4">
-            <Button type="button" variant="outline" onClick={() => setStep((s) => Math.max(0, s - 1))} disabled={step === 0}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setStep((s) => Math.max(0, s - 1))}
+              disabled={step === 0}
+            >
               <ChevronLeft aria-hidden /> Back
             </Button>
             <Button

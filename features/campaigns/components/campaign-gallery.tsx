@@ -52,7 +52,13 @@ export function CampaignGallery({
           <DialogTitle className="sr-only">{current.alt}</DialogTitle>
           <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-muted">
             {current.url ? (
-              <Image src={current.url} alt={current.alt} fill sizes="90vw" className="object-contain" />
+              <Image
+                src={current.url}
+                alt={current.alt}
+                fill
+                sizes="90vw"
+                className="object-contain"
+              />
             ) : (
               <CampaignPlaceholder seed={seed} label={title} />
             )}
@@ -61,7 +67,11 @@ export function CampaignGallery({
       </Dialog>
 
       {usable.length > 1 ? (
-        <div className="flex gap-2 overflow-x-auto pb-1" role="tablist" aria-label="Gallery thumbnails">
+        <div
+          className="flex gap-2 overflow-x-auto pb-1"
+          role="tablist"
+          aria-label="Gallery thumbnails"
+        >
           {usable.map((image, index) => (
             <button
               key={index}

@@ -73,7 +73,8 @@ const templates: Record<TemplateKey, Template> = {
     version: 1,
     subject: () => "Campaign submitted for review",
     heading: () => "Campaign submitted",
-    paragraph: () => "Our moderation team is reviewing your campaign. We'll notify you of the decision.",
+    paragraph: () =>
+      "Our moderation team is reviewing your campaign. We'll notify you of the decision.",
     cta: { label: "Seller dashboard", path: "/seller" },
   },
   campaign_approved: {
@@ -87,14 +88,16 @@ const templates: Record<TemplateKey, Template> = {
     version: 1,
     subject: () => "Changes requested on your campaign",
     heading: () => "Changes requested",
-    paragraph: ({ body }) => body ?? "Moderation asked for changes before your campaign can go live.",
+    paragraph: ({ body }) =>
+      body ?? "Moderation asked for changes before your campaign can go live.",
     cta: { label: "Edit campaign", path: "/seller" },
   },
   campaign_rejected: {
     version: 1,
     subject: () => "Campaign rejected",
     heading: () => "Campaign rejected",
-    paragraph: ({ body }) => body ?? "Your campaign cannot be listed. The reason is in your dashboard.",
+    paragraph: ({ body }) =>
+      body ?? "Your campaign cannot be listed. The reason is in your dashboard.",
     cta: { label: "Seller dashboard", path: "/seller" },
   },
   campaign_ending_soon: {
@@ -109,7 +112,8 @@ const templates: Record<TemplateKey, Template> = {
     subject: () => "Campaign closed — draw pending",
     heading: () => "Entries closed",
     paragraph: ({ body }) =>
-      body ?? "The campaign has closed. The draw runs on our servers and the record will be public.",
+      body ??
+      "The campaign has closed. The draw runs on our servers and the record will be public.",
     cta: { label: "Draw records", path: "/draws" },
   },
   winner_provisional: {
@@ -125,8 +129,7 @@ const templates: Record<TemplateKey, Template> = {
     version: 1,
     subject: () => "Congratulations — you won!",
     heading: () => "Winner confirmed",
-    paragraph: ({ body }) =>
-      body ?? "Your eligibility is verified. Prize handover starts now.",
+    paragraph: ({ body }) => body ?? "Your eligibility is verified. Prize handover starts now.",
     cta: { label: "My entries", path: "/account/entries" },
   },
   prize_handover: {

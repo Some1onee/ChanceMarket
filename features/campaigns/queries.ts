@@ -11,7 +11,10 @@ import { logError } from "@/lib/observability/logger";
 
 export type PublicCampaign = CampaignRow & {
   categories: Pick<CategoryRow, "slug" | "name"> | null;
-  campaign_images: Pick<CampaignImageRow, "storage_path" | "alt_text" | "sort_order" | "is_cover">[];
+  campaign_images: Pick<
+    CampaignImageRow,
+    "storage_path" | "alt_text" | "sort_order" | "is_cover"
+  >[];
 };
 
 export type CampaignFilters = {

@@ -9,17 +9,12 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary:
-          "bg-primary text-primary-foreground shadow-sm hover:opacity-90",
-        secondary:
-          "bg-subtle text-foreground border border-border shadow-xs hover:bg-muted",
-        accent:
-          "bg-accent text-accent-foreground shadow-sm hover:opacity-90",
+        primary: "bg-primary text-primary-foreground shadow-sm hover:opacity-90",
+        secondary: "bg-subtle text-foreground border border-border shadow-xs hover:bg-muted",
+        accent: "bg-accent text-accent-foreground shadow-sm hover:opacity-90",
         ghost: "text-foreground hover:bg-muted",
-        outline:
-          "border border-input bg-transparent text-foreground hover:bg-muted",
-        destructive:
-          "bg-destructive text-destructive-foreground shadow-sm hover:opacity-90",
+        outline: "border border-input bg-transparent text-foreground hover:bg-muted",
+        destructive: "bg-destructive text-destructive-foreground shadow-sm hover:opacity-90",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
@@ -38,14 +33,16 @@ const buttonVariants = cva(
 );
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   asChild?: boolean;
   loading?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, loading = false, children, disabled, ...props }, ref) => {
+  (
+    { className, variant, size, asChild = false, loading = false, children, disabled, ...props },
+    ref,
+  ) => {
     const Comp = asChild ? Slot : "button";
     return (
       <Comp

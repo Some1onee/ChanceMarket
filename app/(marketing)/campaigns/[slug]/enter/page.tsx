@@ -2,7 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
-import { getCampaignDetail, getCampaignExtras, getUserCampaignState } from "@/features/campaigns/detail-queries";
+import {
+  getCampaignDetail,
+  getCampaignExtras,
+  getUserCampaignState,
+} from "@/features/campaigns/detail-queries";
 import { checkCampaignEligibility, eligibilityReasonMessage } from "@/features/compliance/service";
 import { getSessionUser } from "@/lib/auth/session";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
@@ -43,8 +47,7 @@ export default async function EnterCampaignPage({
 
   const currency = isCurrency(campaign.currency) ? campaign.currency : "GBP";
   const isOpen =
-    campaign.status === "active" &&
-    (!campaign.ends_at || new Date(campaign.ends_at) > new Date());
+    campaign.status === "active" && (!campaign.ends_at || new Date(campaign.ends_at) > new Date());
 
   return (
     <div className="mx-auto w-full max-w-2xl px-4 py-10 sm:px-6">

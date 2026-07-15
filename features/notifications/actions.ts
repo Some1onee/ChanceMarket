@@ -44,7 +44,9 @@ const prefsSchema = z.object({
   inappDrawResults: z.boolean(),
 });
 
-export async function updateNotificationPrefsAction(input: unknown): Promise<ActionResult<undefined>> {
+export async function updateNotificationPrefsAction(
+  input: unknown,
+): Promise<ActionResult<undefined>> {
   return toActionResult(async () => {
     const user = await requireUser();
     const data = prefsSchema.parse(input);

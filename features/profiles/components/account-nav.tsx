@@ -2,15 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Bell,
-  Database,
-  Heart,
-  ShieldAlert,
-  Ticket,
-  User,
-  KeyRound,
-} from "lucide-react";
+import { Bell, Database, Heart, ShieldAlert, Ticket, User, KeyRound } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const items = [

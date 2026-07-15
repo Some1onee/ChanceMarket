@@ -91,7 +91,10 @@ export default async function EntriesPage() {
                   {order.total_minor === 0
                     ? "Free"
                     : formatMoney(
-                        money(order.total_minor, isCurrency(order.currency) ? order.currency : "GBP"),
+                        money(
+                          order.total_minor,
+                          isCurrency(order.currency) ? order.currency : "GBP",
+                        ),
                         locale,
                       )}
                 </TableCell>

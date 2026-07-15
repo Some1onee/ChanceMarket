@@ -51,8 +51,8 @@ export function SignUpForm() {
         </div>
         <h1 className="text-xl font-semibold">Check your inbox</h1>
         <p className="text-sm text-muted-foreground">
-          We sent a confirmation link to <strong>{submittedEmail}</strong>. Open it to activate
-          your account.
+          We sent a confirmation link to <strong>{submittedEmail}</strong>. Open it to activate your
+          account.
         </p>
         <Button variant="outline" asChild>
           <Link href="/sign-in">Back to sign in</Link>
@@ -82,7 +82,11 @@ export function SignUpForm() {
               <FormItem>
                 <FormLabel>Display name</FormLabel>
                 <FormControl>
-                  <Input autoComplete="nickname" placeholder="How you'll appear publicly" {...field} />
+                  <Input
+                    autoComplete="nickname"
+                    placeholder="How you'll appear publicly"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -95,7 +99,12 @@ export function SignUpForm() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input type="email" autoComplete="email" placeholder="you@example.com" {...field} />
+                  <Input
+                    type="email"
+                    autoComplete="email"
+                    placeholder="you@example.com"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

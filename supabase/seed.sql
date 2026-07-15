@@ -11,17 +11,18 @@
 -- ── auth users ──────────────────────────────────────────────────────────────
 insert into auth.users (
   instance_id, id, aud, role, email, encrypted_password, email_confirmed_at,
-  raw_app_meta_data, raw_user_meta_data, created_at, updated_at
+  raw_app_meta_data, raw_user_meta_data, created_at, updated_at,
+  confirmation_token, recovery_token, email_change, email_change_token_new, email_change_token_current
 )
 values
-  ('00000000-0000-0000-0000-000000000000','10000000-0000-4000-8000-000000000001','authenticated','authenticated','admin@demo.test', extensions.crypt('Demo1234!pass', extensions.gen_salt('bf')), now(),'{"provider":"email","providers":["email"]}','{"display_name":"Avery Admin"}', now(), now()),
-  ('00000000-0000-0000-0000-000000000000','10000000-0000-4000-8000-000000000002','authenticated','authenticated','moderator@demo.test', extensions.crypt('Demo1234!pass', extensions.gen_salt('bf')), now(),'{"provider":"email","providers":["email"]}','{"display_name":"Morgan Moderator"}', now(), now()),
-  ('00000000-0000-0000-0000-000000000000','10000000-0000-4000-8000-000000000003','authenticated','authenticated','finance@demo.test', extensions.crypt('Demo1234!pass', extensions.gen_salt('bf')), now(),'{"provider":"email","providers":["email"]}','{"display_name":"Finley Finance"}', now(), now()),
-  ('00000000-0000-0000-0000-000000000000','20000000-0000-4000-8000-000000000001','authenticated','authenticated','seller.one@demo.test', extensions.crypt('Demo1234!pass', extensions.gen_salt('bf')), now(),'{"provider":"email","providers":["email"]}','{"display_name":"Northway Cycles"}', now(), now()),
-  ('00000000-0000-0000-0000-000000000000','20000000-0000-4000-8000-000000000002','authenticated','authenticated','seller.two@demo.test', extensions.crypt('Demo1234!pass', extensions.gen_salt('bf')), now(),'{"provider":"email","providers":["email"]}','{"display_name":"Meridian Watches"}', now(), now()),
-  ('00000000-0000-0000-0000-000000000000','30000000-0000-4000-8000-000000000001','authenticated','authenticated','alice@demo.test', extensions.crypt('Demo1234!pass', extensions.gen_salt('bf')), now(),'{"provider":"email","providers":["email"]}','{"display_name":"Alice"}', now(), now()),
-  ('00000000-0000-0000-0000-000000000000','30000000-0000-4000-8000-000000000002','authenticated','authenticated','ben@demo.test', extensions.crypt('Demo1234!pass', extensions.gen_salt('bf')), now(),'{"provider":"email","providers":["email"]}','{"display_name":"Ben"}', now(), now()),
-  ('00000000-0000-0000-0000-000000000000','30000000-0000-4000-8000-000000000003','authenticated','authenticated','chloe@demo.test', extensions.crypt('Demo1234!pass', extensions.gen_salt('bf')), now(),'{"provider":"email","providers":["email"]}','{"display_name":"Chloe"}', now(), now());
+  ('00000000-0000-0000-0000-000000000000','10000000-0000-4000-8000-000000000001','authenticated','authenticated','admin@demo.test', extensions.crypt('Demo1234!pass', extensions.gen_salt('bf')), now(),'{"provider":"email","providers":["email"]}','{"display_name":"Avery Admin"}', now(), now(), '', '', '', '', ''),
+  ('00000000-0000-0000-0000-000000000000','10000000-0000-4000-8000-000000000002','authenticated','authenticated','moderator@demo.test', extensions.crypt('Demo1234!pass', extensions.gen_salt('bf')), now(),'{"provider":"email","providers":["email"]}','{"display_name":"Morgan Moderator"}', now(), now(), '', '', '', '', ''),
+  ('00000000-0000-0000-0000-000000000000','10000000-0000-4000-8000-000000000003','authenticated','authenticated','finance@demo.test', extensions.crypt('Demo1234!pass', extensions.gen_salt('bf')), now(),'{"provider":"email","providers":["email"]}','{"display_name":"Finley Finance"}', now(), now(), '', '', '', '', ''),
+  ('00000000-0000-0000-0000-000000000000','20000000-0000-4000-8000-000000000001','authenticated','authenticated','seller.one@demo.test', extensions.crypt('Demo1234!pass', extensions.gen_salt('bf')), now(),'{"provider":"email","providers":["email"]}','{"display_name":"Northway Cycles"}', now(), now(), '', '', '', '', ''),
+  ('00000000-0000-0000-0000-000000000000','20000000-0000-4000-8000-000000000002','authenticated','authenticated','seller.two@demo.test', extensions.crypt('Demo1234!pass', extensions.gen_salt('bf')), now(),'{"provider":"email","providers":["email"]}','{"display_name":"Meridian Watches"}', now(), now(), '', '', '', '', ''),
+  ('00000000-0000-0000-0000-000000000000','30000000-0000-4000-8000-000000000001','authenticated','authenticated','alice@demo.test', extensions.crypt('Demo1234!pass', extensions.gen_salt('bf')), now(),'{"provider":"email","providers":["email"]}','{"display_name":"Alice"}', now(), now(), '', '', '', '', ''),
+  ('00000000-0000-0000-0000-000000000000','30000000-0000-4000-8000-000000000002','authenticated','authenticated','ben@demo.test', extensions.crypt('Demo1234!pass', extensions.gen_salt('bf')), now(),'{"provider":"email","providers":["email"]}','{"display_name":"Ben"}', now(), now(), '', '', '', '', ''),
+  ('00000000-0000-0000-0000-000000000000','30000000-0000-4000-8000-000000000003','authenticated','authenticated','chloe@demo.test', extensions.crypt('Demo1234!pass', extensions.gen_salt('bf')), now(),'{"provider":"email","providers":["email"]}','{"display_name":"Chloe"}', now(), now(), '', '', '', '', '');
 
 insert into auth.identities (id, user_id, provider_id, provider, identity_data, last_sign_in_at, created_at, updated_at)
 select gen_random_uuid(), u.id, u.id::text, 'email',
@@ -249,7 +250,7 @@ values (
   'An authenticated mid-century lounge chair with ottoman, rosewood and leather.',
   'A documented, authenticated mid-century lounge chair and ottoman. Completed campaign kept as a public draw-verification example.',
   'hybrid_paid_with_free_route','completed',
-  520000,'GBP',400,1,20,60,5,5,
+  520000,'GBP',400,1,5,5,5,5,
   true,'Postal route was available during this campaign. Reference: LOUNGE-1956.',true,18,
   now() - interval '40 days', now() - interval '10 days', now() - interval '10 days',
   'GB','White-glove delivery within 21 days of verification.', now() - interval '40 days'
@@ -372,11 +373,11 @@ values
   ('90000000-0000-4000-8000-000000000013','30000000-0000-4000-8000-000000000002','70000000-0000-4000-8000-000000000003',1,0,0,'GBP','confirmed','free_route','seed-c3-ben');
 
 insert into public.entries (campaign_id, user_id, order_id, entry_number, source, status)
-select '70000000-0000-4000-8000-000000000001','30000000-0000-4000-8000-000000000001','90000000-0000-4000-8000-000000000011', g, 'paid','confirmed' from generate_series(1,10) g
+select '70000000-0000-4000-8000-000000000001'::uuid,'30000000-0000-4000-8000-000000000001'::uuid,'90000000-0000-4000-8000-000000000011'::uuid, g, 'paid'::public.entry_source,'confirmed'::public.entry_status from generate_series(1,10) g
 union all
-select '70000000-0000-4000-8000-000000000001','30000000-0000-4000-8000-000000000002','90000000-0000-4000-8000-000000000012', 10+g, 'paid','confirmed' from generate_series(1,6) g
+select '70000000-0000-4000-8000-000000000001'::uuid,'30000000-0000-4000-8000-000000000002'::uuid,'90000000-0000-4000-8000-000000000012'::uuid, 10+g, 'paid'::public.entry_source,'confirmed'::public.entry_status from generate_series(1,6) g
 union all
-select '70000000-0000-4000-8000-000000000003','30000000-0000-4000-8000-000000000002','90000000-0000-4000-8000-000000000013', 1, 'free_route','confirmed';
+select '70000000-0000-4000-8000-000000000003'::uuid,'30000000-0000-4000-8000-000000000002'::uuid,'90000000-0000-4000-8000-000000000013'::uuid, 1, 'free_route'::public.entry_source,'confirmed'::public.entry_status;
 
 update public.campaigns set entries_confirmed = 16 where id = '70000000-0000-4000-8000-000000000001';
 update public.campaigns set entries_confirmed = 1 where id = '70000000-0000-4000-8000-000000000003';

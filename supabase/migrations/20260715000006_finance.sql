@@ -236,7 +236,8 @@ begin
     p_currency,
     coalesce(sum(amount_minor) filter (where entry_type in ('entry_payment','platform_fee','provider_fee','refund','chargeback','seller_payout','payout_reversal','adjustment')), 0),
     coalesce(sum(amount_minor) filter (where entry_type in ('reserve_hold','reserve_release')), 0),
-    0
+    0,
+    now()
   from public.financial_ledger
   where account = 'seller' and account_ref = p_seller_id and currency = p_currency
   on conflict (seller_id, currency) do update

@@ -1,9 +1,12 @@
 import type { NextConfig } from "next";
 
+const isDev = process.env.NODE_ENV === "development";
+
 const contentSecurityPolicy = [
   "default-src 'self'",
   // Next.js runtime requires inline bootstrap scripts; move to nonces when hardening further.
-  "script-src 'self' 'unsafe-inline'",
+  // Dev only: webpack eval-based source maps need 'unsafe-eval'; never shipped in production.
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://*.supabase.co",
   "font-src 'self' data:",
@@ -33,6 +36,8 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  // Dev only: allow access through Cloudflare quick tunnels (ignored by `next build`).
+  allowedDevOrigins: ["*.trycloudflare.com"],
   outputFileTracingRoot: __dirname,
   images: {
     formats: ["image/avif", "image/webp"],

@@ -22,6 +22,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import type { Dictionary } from "@/lib/localization/dictionaries";
 
 type UserMenuProps = {
   email: string;
@@ -29,9 +30,10 @@ type UserMenuProps = {
   avatarUrl: string | null;
   isAdmin: boolean;
   isSeller: boolean;
+  t: Dictionary["auth"]["userMenu"];
 };
 
-export function UserMenu({ email, displayName, avatarUrl, isAdmin, isSeller }: UserMenuProps) {
+export function UserMenu({ email, displayName, avatarUrl, isAdmin, isSeller, t }: UserMenuProps) {
   const router = useRouter();
 
   async function signOut() {
@@ -51,7 +53,7 @@ export function UserMenu({ email, displayName, avatarUrl, isAdmin, isSeller }: U
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        aria-label="Account menu"
+        aria-label={t.menuLabel}
         className="rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
       >
         <Avatar className="size-8">
@@ -67,22 +69,22 @@ export function UserMenu({ email, displayName, avatarUrl, isAdmin, isSeller }: U
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <Link href="/account">
-            <Settings aria-hidden /> Account settings
+            <Settings aria-hidden /> {t.settings}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href="/account/entries">
-            <Ticket aria-hidden /> My entries
+            <Ticket aria-hidden /> {t.entries}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href="/account/favourites">
-            <Heart aria-hidden /> Favourites
+            <Heart aria-hidden /> {t.favourites}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href="/account/notifications">
-            <Bell aria-hidden /> Notifications
+            <Bell aria-hidden /> {t.notifications}
           </Link>
         </DropdownMenuItem>
         {isSeller ? (
@@ -90,27 +92,27 @@ export function UserMenu({ email, displayName, avatarUrl, isAdmin, isSeller }: U
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
               <Link href="/seller">
-                <Store aria-hidden /> Seller dashboard
+                <Store aria-hidden /> {t.sellerDashboard}
               </Link>
             </DropdownMenuItem>
           </>
         ) : (
           <DropdownMenuItem asChild>
             <Link href="/sell">
-              <LayoutDashboard aria-hidden /> Become a seller
+              <LayoutDashboard aria-hidden /> {t.becomeSeller}
             </Link>
           </DropdownMenuItem>
         )}
         {isAdmin ? (
           <DropdownMenuItem asChild>
             <Link href="/admin">
-              <ShieldCheck aria-hidden /> Admin
+              <ShieldCheck aria-hidden /> {t.admin}
             </Link>
           </DropdownMenuItem>
         ) : null}
         <DropdownMenuSeparator />
         <DropdownMenuItem onSelect={() => void signOut()}>
-          <LogOut aria-hidden /> Sign out
+          <LogOut aria-hidden /> {t.signOut}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

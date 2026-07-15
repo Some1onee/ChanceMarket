@@ -3,6 +3,7 @@ import { Bricolage_Grotesque, Instrument_Sans, JetBrains_Mono } from "next/font/
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { brand } from "@/lib/config/brand";
+import { getLocale } from "@/lib/localization/locale";
 import "./globals.css";
 
 const bricolage = Bricolage_Grotesque({
@@ -53,9 +54,10 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const locale = await getLocale();
   return (
-    <html lang="en-GB" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body
         className={`${bricolage.variable} ${instrument.variable} ${jetbrains.variable} min-h-dvh antialiased`}
       >

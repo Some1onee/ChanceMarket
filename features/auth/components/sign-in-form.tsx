@@ -17,8 +17,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import type { Dictionary } from "@/lib/localization/dictionaries";
 
-export function SignInForm({ next }: { next?: string }) {
+export function SignInForm({ next, t }: { next?: string; t: Dictionary["auth"]["signIn"] }) {
   const router = useRouter();
   const form = useForm<SignInInput>({
     resolver: zodResolver(signInSchema),
@@ -38,11 +39,11 @@ export function SignInForm({ next }: { next?: string }) {
   return (
     <div className="space-y-6">
       <div className="space-y-1.5">
-        <h1 className="text-2xl font-semibold tracking-tight">Welcome back</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">{t.title}</h1>
         <p className="text-sm text-muted-foreground">
-          New here?{" "}
+          {t.newHere}{" "}
           <Link href="/sign-up" className="text-primary underline-offset-4 hover:underline">
-            Create an account
+            {t.createAccount}
           </Link>
         </p>
       </div>
@@ -54,7 +55,7 @@ export function SignInForm({ next }: { next?: string }) {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>{t.email}</FormLabel>
                 <FormControl>
                   <Input
                     type="email"
@@ -73,12 +74,12 @@ export function SignInForm({ next }: { next?: string }) {
             render={({ field }) => (
               <FormItem>
                 <div className="flex items-center justify-between">
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>{t.password}</FormLabel>
                   <Link
                     href="/forgot-password"
                     className="text-xs text-muted-foreground underline-offset-2 hover:underline"
                   >
-                    Forgot password?
+                    {t.forgotPassword}
                   </Link>
                 </div>
                 <FormControl>
@@ -89,7 +90,7 @@ export function SignInForm({ next }: { next?: string }) {
             )}
           />
           <Button type="submit" className="w-full" loading={form.formState.isSubmitting}>
-            Sign in
+            {t.submit}
           </Button>
         </form>
       </Form>

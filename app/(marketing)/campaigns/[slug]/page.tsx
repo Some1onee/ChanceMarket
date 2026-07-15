@@ -102,8 +102,30 @@ export default async function CampaignDetailPage({
   const allowRegions = extras.regions.filter((region) => region.mode === "allow");
   const denyRegions = extras.regions.filter((region) => region.mode === "deny");
 
+  // Structured data: honest Event schema for the campaign (no misleading offers).
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: campaign.title,
+    description: campaign.summary ?? undefined,
+    startDate: campaign.starts_at ?? undefined,
+    endDate: campaign.ends_at ?? undefined,
+    eventStatus: isOpen
+      ? "https://schema.org/EventScheduled"
+      : "https://schema.org/EventCancelled",
+    eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
+    location: { "@type": "VirtualLocation", url: `${process.env.NEXT_PUBLIC_APP_URL ?? ""}/campaigns/${campaign.slug}` },
+    organizer: campaign.seller_profiles
+      ? { "@type": "Organization", name: campaign.seller_profiles.public_name }
+      : undefined,
+  };
+
   return (
     <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <nav aria-label="Breadcrumb" className="mb-6 text-sm text-muted-foreground">
         <ol className="flex flex-wrap items-center gap-1.5">
           <li>

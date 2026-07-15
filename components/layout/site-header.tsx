@@ -7,7 +7,9 @@ import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/s
 import { getDictionary } from "@/lib/localization/dictionaries";
 import { getLocale } from "@/lib/localization/locale";
 import { UserMenu } from "@/features/auth/components/user-menu";
+import { NotificationsBell } from "@/features/notifications/components/notifications-bell";
 import { getSessionUser } from "@/lib/auth/session";
+import { getSupabaseServerClient } from "@/lib/supabase/server";
 
 const navLinks = [
   { href: "/campaigns", key: "browse" as const },
@@ -20,6 +22,17 @@ export async function SiteHeader() {
   const locale = await getLocale();
   const t = getDictionary(locale);
   const user = await getSessionUser();
+
+  let unreadCount = 0;
+  if (user) {
+    const supabase = await getSupabaseServerClient();
+    const { count } = await supabase
+      .from("notifications")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", user.id)
+      .is("read_at", null);
+    unreadCount = count ?? 0;
+  }
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/70 bg-background/85 backdrop-blur-md">
@@ -69,6 +82,7 @@ export async function SiteHeader() {
             </Link>
           </Button>
           <ThemeToggle />
+          {user ? <NotificationsBell userId={user.id} initialUnread={unreadCount} /> : null}
           {user ? (
             <UserMenu
               email={user.email ?? ""}

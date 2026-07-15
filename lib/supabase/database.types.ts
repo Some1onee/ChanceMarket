@@ -573,6 +573,7 @@ export type DrawRow = {
   snapshot_id: string | null;
   winner_entry_id: string | null;
   selection_method: "csprng" | "external_seed";
+  random_seed: string | null;
   random_seed_hash: string | null;
   selected_at: string | null;
   executed_by: string | null;

@@ -17,8 +17,8 @@
 | Phase | Scope | Status | Verification |
 | ----- | ----- | ------ | ------------ |
 | 1 | Repo audit, tooling, architecture docs | ✅ done | repo was empty; git init; pnpm install OK |
-| 2 | Next.js scaffold, quality gates, design system | 🔨 in progress | typecheck/lint/build at phase end |
-| 3 | Supabase schema, migrations, RLS, seed | ⬜ | SQL review + CI `supabase db reset` |
+| 2 | Next.js scaffold, quality gates, design system | ✅ done | typecheck ✅ lint ✅ build ✅ |
+| 3 | Supabase schema, migrations, RLS, seed | ✅ authored | 9 migrations + seed written; executable via `supabase db reset` (Docker) / CI — no Docker on this machine |
 | 4 | Auth & profiles | ⬜ | |
 | 5 | Catalog & campaign pages | ⬜ | |
 | 6 | Seller area & campaign wizard | ⬜ | |
